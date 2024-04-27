@@ -42,6 +42,7 @@
 @media (max-width: 900px) {
     .select-wildcards-wrapper {
         width: 100%;
+        max-width: 100%;
     }
 }
 
