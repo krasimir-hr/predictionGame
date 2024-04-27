@@ -5,7 +5,7 @@ from django.db import models
 
 class Team(models.Model):
     name = models.CharField(max_length=20)
-    logo = models.ImageField(upload_to='team_logos/')
+    logo = models.URLField()
 
     def __str__(self):
         return f"{self.name}"
