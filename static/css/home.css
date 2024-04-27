@@ -176,7 +176,6 @@ h1, h2 {
     padding: 8px;
     text-align: center;
     background-color: #0A0A0A;
-    border-radius: 5px;
     border-collapse: collapse;
 }
 
@@ -196,12 +195,16 @@ h1, h2 {
     border-top-left-radius: 5px;
 }
 
+.standings-table td:first-child {
+    border-bottom-left-radius: 5px;
+}
+
 .standings-table th:last-child {
     border-top-right-radius: 5px;
 }
 
 .standings-table td:last-child {
-    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .player-predicts {
