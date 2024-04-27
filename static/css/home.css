@@ -350,7 +350,7 @@ h1, h2 {
 
     .player-predicts {
         display: flex;
-        width: 100%;
+        width: 120%;
     }
 
     .vs {
