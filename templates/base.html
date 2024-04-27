@@ -1,0 +1,73 @@
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MSI 2024 Prediction Game</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}"/>
+    <script src="https://kit.fontawesome.com/2c665bbf8a.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header>
+    <nav>
+        <div class="navbar--logo-user">
+            <div class="logo-wrapper">
+                <a href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt="MSI logo"></a>
+            </div>
+            <div class="user-wrapper">
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile-details' logged_in_user.id %}">
+                        <p class="user-name">{{ logged_in_user.username }}</p>
+                        {% if logged_in_user.profile.profile_picture %}
+                            <img class="user-avatar" src="{{ logged_in_user.profile.profile_picture.url }}"
+                                 alt="user-avatar">
+                        {% endif %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="navbar--buttons">
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'wildcards' %}">Wildcards</a></li>
+                    <li><a href="#">Hall of Fame</a></li>
+                </ul>
+            </div>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+    <div class="footer-wrap">
+        <div class="personal-information">
+            <p>Created by Krasimir Hristov</p>
+            <div class="socials">
+                <a href="https://github.com/krasimir-hr">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://twitter.com/very_hardstuck">
+                    <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/krasimir-hristov-7613a7279/">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

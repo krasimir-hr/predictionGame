@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Profile details</h1>
+    <div class="profile-wrap">
+        <div class="profile-avatar-name">
+            <img src="{{ user.profile.profile_picture.url }}" alt="">
+            <h3>{{ user.username }}</h3>
+            {% if request.user == user %}
+            	<a href="{% url 'edit-profile' request.user.id %}"><i class="fa-solid fa-pen-to-square"> </i> Edit</a>
+            {% endif %}
+        </div>
+        <div class="profile-edit-button">
+
+        </div>
+        <div class="profile-stats">
+            <div class="profile-stats--column">
+                <div class="profile-stats--number">{{ user.profile.total_points }}</div>
+                <div class="profile-stats--caption">Total points</div>
+            </div>
+            <div class="profile-stats--column">
+                <div class="profile-stats--number">{{ user.profile.correct_wins }}</div>
+                <div class="profile-stats--caption">Predicted wins</div>
+            </div>
+            <div class="profile-stats--column">
+                <div class="profile-stats--number">{{ user.profile.correct_results}}</div>
+                <div class="profile-stats--caption">Predicted results</div>
+            </div>
+            <div class="profile-stats--column">
+                <div class="profile-stats--number">{{ user.profile.bonus_points}}</div>
+                <div class="profile-stats--caption">Bonus points</div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

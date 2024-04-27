@@ -1,0 +1,130 @@
+.profile-wrap {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    background-color: #0a0a0a;
+    border-radius: 5px;
+    border: 1px solid #252525;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.profile-avatar-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+}
+
+.profile-avatar-name img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.profile-avatar-name a {
+    font-size: 13px;
+    color: #e1a042;
+}
+
+.profile-avatar-name a:hover {
+    color: #e1b776;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-evenly;
+    width: 65%;
+    align-items: center;
+}
+
+.profile-stats--column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 157px;
+}
+
+.profile-stats--number {
+    font-size: 50px;
+    color: #fff;
+}
+
+.edit {
+    width: 30%;
+}
+
+.edit form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.edit img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.edit button {
+    margin: 10px auto;
+    border: 1px solid #6da656;
+    background-color: #92ad4b;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: block;
+    padding: 10px;
+}
+
+.edit button:hover {
+    background-color: #b0d356;
+}
+
+.edit input {
+    width: 50%;
+    background-color: #fff;
+    margin-top: 20px;
+    border: none;
+    font-size: 17px;
+}
+
+input[id="id_username"] {
+    width: 219px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 450px) {
+    .profile-wrap {
+        width: 95%;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0
+    }
+
+    .profile-stats {
+        width: 100%;
+        padding-top: 20px;
+    }
+
+    .profile-stats--number {
+        font-size: 40px;
+        color: #fff;
+    }
+
+    .profile-stats--caption {
+        font-size: 12px;
+    }
+
+    .edit input {
+        width: 200px;
+    }
+
+    input[id="id_username"] {
+        width: 196px;
+    }
+}

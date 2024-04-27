@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Edit profile</h2>
+    <div class="profile-wrap edit">
+        <form action="" method="post">
+            <img src="{{ user.profile.profile_picture.url }}" alt="">
+            {{ form.profile_picture }}
+            {{ form.username }}
+            {% csrf_token %}
+            <button>Save</button>
+        </form>
+    </div>
+{% endblock %}

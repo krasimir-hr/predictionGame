@@ -1,0 +1,356 @@
+.content-wrap {
+    display: flex;
+    width: 1400px;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.main {
+    width: 70%;
+}
+
+.predictions {
+    width: 100%;
+    background-color: #0A0A0A;
+    border: 1px solid #252525;
+    border-radius: 5px;
+}
+
+.predictions-game, .predictions-game--teams {
+    display: flex;
+}
+
+.predictions-game {
+    width: 100%;
+    border-bottom: 1px solid #252525;
+    padding: 10px 0;
+    align-items: center;
+    height: 128px;
+}
+
+.predictions-game--details {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    align-items: center;
+}
+
+.predictions-game:last-child {
+    border-bottom: none;
+}
+
+.predictions-game--date--type {
+    display: flex;
+    width: 25%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.predictions-game--date {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-type p {
+    font-size: 20px;
+    margin: 0;
+}
+
+.game-type {
+    text-align: center;
+}
+
+.predictions-game--date p {
+    margin: 0;
+}
+
+.predictions-game--teams {
+    width: 486px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.vs {
+    font-size: 25px;
+    margin: 0;
+    color: #6c6c6c;
+}
+
+.team-wrap {
+    height: 100%;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.team-wrap img {
+    height: 90px;
+    margin: 0 auto;
+}
+
+.hidden-radio {
+    display: none;
+}
+
+
+.score {
+    width: 30px;
+    font-size: 25px;
+    background-color: #0A0A0A;
+    color: #fff;
+    border: 1px solid #252525;
+    padding: 2px;
+    text-align: center;
+}
+
+.result {
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    vertical-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+h1, h2 {
+    color: #fff;
+    text-align: center;
+}
+
+.prediction-form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.save-predictions {
+    margin: 10px auto;
+    border: 1px solid #6da656;
+    background-color: #92ad4b;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: block;
+    padding: 10px;
+}
+
+.save-predictions:hover {
+    background-color: #b0d356;
+}
+
+.sidebar {
+    width: 27%;
+}
+
+.table-wrap {
+    border-radius: 5px;
+    border: 1px solid #252525;
+    width: 100%;
+}
+
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+.standings-table th,
+.standings-table td {
+    padding: 8px;
+    text-align: center;
+    background-color: #0A0A0A;
+    border-radius: 5px;
+    border-collapse: collapse;
+}
+
+.standings-table td {
+    border-bottom: 1px solid #252525;
+}
+
+.standings-table tr:last-child td {
+    border-bottom: none;
+}
+
+.standings-table td:first-child {
+    text-align: unset;
+}
+
+.standings-table th:first-child {
+    border-top-left-radius: 5px;
+}
+
+.standings-table th:last-child {
+    border-top-right-radius: 5px;
+}
+
+.standings-table td:last-child {
+    border-bottom-left-radius: 5px;
+}
+
+.player-predicts {
+    width: 30%;
+}
+
+.player-predicts--names {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 123%;
+    align-items: center;
+}
+
+.player-bet {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.player-predicts p {
+    margin: 0;
+    font-size: 15px;
+}
+
+.bet-points {
+    color: #e1a042;
+    border: 1px solid #e1a042;
+    border-radius: 5px;
+    padding: 3px;
+    font-size: 13px;
+}
+
+.team-score {
+    font-size: 25px;
+    color: #dadada;
+}
+
+.user-holder a {
+    display: flex;
+    align-items: center;
+}
+
+.user-holder img {
+    margin-right: 2px;
+}
+
+.team-logo-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 125px;
+}
+
+.google-login-button {
+    font-size: 70px;
+    background-color: #0a0a0a;
+    border: 1px solid #252525;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.google-login-button:hover {
+    background-color: #45a049; /* Darker Green */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media (max-width: 1000px) {
+    .content-wrap {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main, .sidebar {
+        width: 100%;
+    }
+
+
+    .predictions-game {
+        flex-direction: column;
+        height: 240px;
+        justify-content: space-between;
+    }
+
+    .predict {
+        height: 150px
+    }
+
+    .predictions-game--date--type {
+        width: 75%;
+    }
+
+    .predictions-game--date {
+        text-align: center;
+        flex-direction: unset;
+        justify-content: space-between;
+    }
+
+    .predictions-game--details {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 100%;
+    }
+
+    .predictions-game--teams {
+        width: 120%;
+    }
+
+    .team-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+
+    .team img {
+        height: 60px;
+        margin: 0 auto;
+    }
+
+    .game-type--status {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        justify-items: center;
+    }
+
+    .game-type {
+        width: unset;
+    }
+
+    .result {
+        font-size: 20px;
+    }
+
+    .player-predicts {
+        display: flex;
+        width: 100%;
+    }
+
+    .vs {
+        margin: 0 5px;
+    }
+}

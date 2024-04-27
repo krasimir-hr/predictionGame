@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% load socialaccount %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <div class="content-wrap">
+            <div class="main">
+                {% if user_pending_matches %}
+                    <h1>Games to predict</h1>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="predictions">
+                            {% for match in user_pending_matches %}
+                                <div class="predictions-game predict">
+                                    <div class="predictions-game--date--type">
+                                        <div class="predictions-game--date">
+                                            <p>{{ match.match_timedate | date:"d-m-Y" }}</p>
+                                            <p>{{ match.match_timedate | date:"H:i" }}</p>
+                                        </div>
+                                        <div class="game-type">
+                                            <p>{{ match.game_type }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="predictions-game--details">
+                                        <div class="predictions-game--teams">
+                                            <div class="team-wrap">
+                                                <div class="team-logo-name">
+                                                    <p>{{ match.team_1.name }}</p>
+                                                    <img src="{{ match.team_1.logo.url }}" alt="team1">
+                                                </div>
+                                                <input class="score" type="number" name="team1_score_{{ match.id }}"
+                                                       maxlength="1">
+                                            </div>
+                                            <p class="vs">vs</p>
+                                            <div class="team-wrap">
+                                                <input class="score" type="number" name="team2_score_{{ match.id }}"
+                                                       maxlength="1">
+                                                <div class="team-logo-name">
+                                                    <img src="{{ match.team_2.logo.url }}" alt="team2">
+                                                    <p>{{ match.team_1.name }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="save-predictions">Save</button>
+                    </form>
+                {% endif %}
+
+                <h1>Results and predictions</h1>
+                <div class="predictions">
+                    {% for match in user_predicted_matches %}
+                        <div class="predictions-game">
+                            <div class="predictions-game--date--type">
+                                <div class="predictions-game--date">
+                                    <p>{{ match.match_timedate | date:"d-m-Y" }}</p>
+                                    <p>{{ match.match_timedate | date:"H:i" }}</p>
+                                </div>
+                                <div class="game-type">
+                                    <p>{{ match.game_type }}</p>
+                                </div>
+                            </div>
+                            <div class="predictions-game--details">
+                                <div class="predictions-game--teams">
+                                    <div class="team-wrap">
+                                        <div class="team-logo-name">
+                                            <p>{{ match.team_1.name }}</p>
+                                            <img src="{{ match.team_1.logo.url }}" alt="team1">
+                                        </div>
+                                        <p class="team-score">{{ match.team1_score }}</p>
+                                    </div>
+                                    <p class="vs">vs</p>
+                                    <div class="team-wrap">
+                                        <p class="team-score">{{ match.team2_score }}</p>
+                                        <div class="team-logo-name">
+                                            <img src="{{ match.team_2.logo.url }}" alt="team2">
+                                            <p>{{ match.team_2.name }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="player-predicts">
+                                    {% with match_id=match.id %}
+                                        <div class="player-predicts--names">
+
+                                            <table class="standings-table">
+                                                <tbody>
+                                                {% for bet in bets_for_matches|get_item:match_id %}
+                                                    <tr>
+                                                        <td>
+                                                            <div class="user-holder">
+                                                                <a href="{% url 'profile-details' bet.user.id %}">
+                                                                    <img class="user-avatar small"
+                                                                         src="{{ bet.user.profile.profile_picture.url }}"
+                                                                         alt="">{{ bet.user.username }}
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ bet.team1_score }} - {{ bet.team2_score }}</td>
+                                                        {% if bet.bet_points == 1 %}
+                                                            <td><p class="bet-points">{{ bet.bet_points }} point</p>
+                                                            </td>
+                                                        {% else %}
+                                                            <td><p class="bet-points">{{ bet.bet_points }} points</p>
+                                                            </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                                <!-- Add more rows for other teams -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% endwith %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="sidebar">
+                <h1>Standings</h1>
+                <div class="table-wrap">
+                    <table class="standings-table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Winners</th>
+                            <th>Results</th>
+                            <th>Points</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for player in users %}
+                            <tr>
+                                <td>
+                                    <div class="user-holder">
+                                        <a href="{% url 'profile-details' player.id %}">
+                                            <img class="user-avatar small"
+                                                 src="{{ player.profile.profile_picture.url }}"
+                                                 alt="">{{ player.username }}
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>{{ player.profile.correct_wins }}</td>
+                                <td>{{ player.profile.correct_results }}</td>
+                                <td>{{ player.profile.total_points }}</td>
+                            </tr>
+                        {% endfor %}
+                        <!-- Add more rows for other teams -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1>Login with Google:</h1>
+        <a href="{% provider_login_url 'google' %}?next=/">
+            <div class="google-login-button">
+                <i class="fa-brands fa-google"></i>
+            </div>
+        </a>
+    {% endif %}
+{% endblock %}

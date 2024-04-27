@@ -1,0 +1,57 @@
+.wildcards-wrapper {
+    margin: 0 auto;
+    max-width: 50%;
+    border: 1px solid #252525;
+    border-radius: 5px;
+    background-color: #0a0a0a;
+}
+
+.wildcards-wrapper form {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.wildcards-wrapper input {
+    width: 100%;
+    height: 25px;
+    font-size: 17px;
+}
+
+.wildcards-wrapper p {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.wildcard td, .wildcard th {
+    border-radius: 0;
+}
+
+.wildcard th a {
+    justify-content: center;
+}
+
+.wildcard td:first-child {
+    font-weight: bold;
+}
+
+.wildcard-table {
+    width: 50%;
+    margin: 0 auto;
+}
+
+@media (max-width: 450px) {
+    .wildcard-table {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .wildcard-table {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 380px) {
+    .wildcard-table {
+        font-size: 12px;
+    }
+}
