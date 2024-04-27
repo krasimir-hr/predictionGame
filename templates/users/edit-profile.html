@@ -3,16 +3,13 @@
 {% block content %}
     <h2>Edit profile</h2>
     <div class="profile-wrap edit">
-        <form action="" method="post">
-            {% if user.profile.profile_picture %}
-                <img src="{{ user.profile.profile_picture.url }}" alt="">
-            {% else %}
-                <img src="{% static 'images/anon-user.webp' %}" alt="">
-            {% endif %}
-            {{ form.profile_picture }}
-            {{ form.username }}
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <button>Save</button>
+            <img src="{{ user.profile.profile_picture }}" alt="">
+            {{ form.profile_picture }}
+            {{ form.edited_username }}
+
+            <button type="submit">Save</button>
         </form>
     </div>
 {% endblock %}

@@ -21,7 +21,14 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     template_name = 'users/edit-profile.html'
 
     def get_object(self, queryset=None):
-        return self.request.user
+        user = self.request.user
+        profile = Profile.objects.filter(user=user).first()
+        return profile
+
+    def form_valid(self, form):
+        profile = form.save(commit=False)
+        profile.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('profile-details', args=[self.request.user.id])

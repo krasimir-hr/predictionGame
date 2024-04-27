@@ -4,12 +4,8 @@
     <h1>Profile details</h1>
     <div class="profile-wrap">
         <div class="profile-avatar-name">
-            {% if user.profile.profile_picture %}
-                <img src="{{ user.profile.profile_picture.url }}" alt="">
-            {% else %}
-                <img src="{% static 'images/anon-user.webp' %}" alt="">
-            {% endif %}
-            <h3>{{ user.username }}</h3>
+            <img src="{{ user.profile.profile_picture }}" alt="">
+            <h3>{{ user.profile.show_username }}</h3>
             {% if request.user == user %}
                 <a href="{% url 'edit-profile' request.user.id %}"><i class="fa-solid fa-pen-to-square"> </i> Edit</a>
             {% endif %}

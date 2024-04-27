@@ -25,9 +25,9 @@
 
                 {% if user.is_authenticated %}
                     <a href="{% url 'profile-details' logged_in_user.id %}">
-                        <p class="user-name">{{ logged_in_user.username }}</p>
+                        <p class="user-name">{{ logged_in_user.profile.show_username }}</p>
                         {% if logged_in_user.profile.profile_picture %}
-                            <img class="user-avatar" src="{{ logged_in_user.profile.profile_picture.url }}"
+                            <img class="user-avatar" src="{{ logged_in_user.profile.profile_picture }}"
                                  alt="user-avatar">
                         {% endif %}
                     </a>
