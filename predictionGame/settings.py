@@ -9,11 +9,11 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-w86i!#4s4j1n$k15&_qs7jsx6+&)=a@=_2lxdqoqngd_g_939o'
+SECRET_KEY = os.getenv('SECRET_KEY', 'change-me')
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', '1') == '1'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -92,7 +92,31 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url .parse("postgres://msi_predictiongame_2024_user:54z9BJlB6aI9CG16cmX5AUlHsWvRj0fj@dpg-comb7tgl6cac73d4k3c0-a.frankfurt-postgres.render.com/msi_predictiongame_2024")
+POSTGRES_DB = os.getenv("POSTGRES_DB")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST")
+POSTGRES_PORT = os.getenv("POSTGRES_PORT")
+
+POSTGRES_READY = (
+    POSTGRES_DB is not None
+    and POSTGRES_PASSWORD is not None
+    and POSTGRES_USER is not None
+    and POSTGRES_HOST is not None
+    and POSTGRES_PORT is not None
+)
+
+if POSTGRES_READY:
+    DATABASES = {
+        "default": {
+            "ENGINE": 'django.db.backends.postgresql_psycopg2',
+            "NAME": POSTGRES_DB,
+            "USER": POSTGRES_USER,
+            "PASSWORD": POSTGRES_PASSWORD,
+            "HOST": POSTGRES_HOST,
+            "PORT": POSTGRES_PORT,
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
