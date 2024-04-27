@@ -7,7 +7,7 @@ from predictionGame.tournament.models import Match
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, default='profile_pictures/anon-user.webp')
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, default='images/anon-user.webp')
     correct_wins = models.IntegerField(default=0)
     correct_results = models.IntegerField(default=0)
     bonus_points = models.IntegerField(default=0)
