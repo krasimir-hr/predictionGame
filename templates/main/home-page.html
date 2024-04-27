@@ -93,9 +93,15 @@
                                                         <td>
                                                             <div class="user-holder">
                                                                 <a href="{% url 'profile-details' bet.user.id %}">
-                                                                    <img class="user-avatar small"
-                                                                         src="{{ bet.user.profile.profile_picture.url }}"
-                                                                         alt="">{{ bet.user.username }}
+                                                                    {% if bet.user.profile.profile_picture %}
+                                                                        <img class="user-avatar small"
+                                                                             src="{{ bet.user.profile.profile_picture.url }}"
+                                                                             alt="">
+                                                                    {% else %}
+                                                                        <img class="user-avatar small"
+                                                                             src="{% static 'images/anon-user.webp' %}"
+                                                                             alt="">
+                                                                    {% endif %}{{ bet.user.username }}
                                                                 </a>
                                                             </div>
                                                         </td>
@@ -138,9 +144,14 @@
                                 <td>
                                     <div class="user-holder">
                                         <a href="{% url 'profile-details' player.id %}">
-                                            <img class="user-avatar small"
-                                                 src="{{ player.profile.profile_picture.url }}"
-                                                 alt="">{{ player.username }}
+                                            {% if player.profile.profile_picture %}
+                                                <img class="user-avatar small"
+                                                     src="{{ player.profile.profile_picture.url }}"
+                                                     alt="">{{ player.username }}
+                                            {% else %}
+                                                <img class="user-avatar small"
+                                                     src="{% static 'images/anon-user.webp' %}" alt="">
+                                            {% endif %}
                                         </a>
                                     </div>
                                 </td>

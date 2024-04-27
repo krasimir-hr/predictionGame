@@ -15,8 +15,14 @@
                         <th>
                             <div class="user-holder">
                                 <a href="{% url 'profile-details' wildcard.user.id %}">
-                                    <img class="user-avatar small" src="{{ wildcard.user.profile.profile_picture.url }}"
-                                         alt="">
+                                    {% if wildcards.user.profile.profile_picture %}
+                                        <img class="user-avatar small"
+                                             src="{{ wildcard.user.profile.profile_picture.url }}"
+                                             alt="">
+                                    {% else %}
+                                        <img class="user-avatar small" src="{% static 'images/anon-user.webp' %}"
+                                             alt="">
+                                    {% endif %}
                                     {{ wildcard.user.username }}
                                 </a>
                             </div>

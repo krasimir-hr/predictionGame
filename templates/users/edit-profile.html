@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <h2>Edit profile</h2>
     <div class="profile-wrap edit">
         <form action="" method="post">
-            <img src="{{ user.profile.profile_picture.url }}" alt="">
+            {% if user.profile.profile_picture %}
+                <img src="{{ user.profile.profile_picture.url }}" alt="">
+            {% else %}
+                <img src="{% static 'images/anon-user.webp' %}" alt="">
+            {% endif %}
             {{ form.profile_picture }}
             {{ form.username }}
             {% csrf_token %}

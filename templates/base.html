@@ -29,6 +29,9 @@
                         {% if logged_in_user.profile.profile_picture %}
                             <img class="user-avatar" src="{{ logged_in_user.profile.profile_picture.url }}"
                                  alt="user-avatar">
+                        {% else %}
+                            <img class="user-avatar" src="{% static 'images/anon-user.webp' %}"
+                                 alt="user-avatar">
                         {% endif %}
                     </a>
                 {% endif %}
