@@ -9,11 +9,11 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'change-me')
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = os.getenv('DEBUG', '1') == '1'
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1").split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -92,31 +92,8 @@ DATABASES = {
     }
 }
 
-POSTGRES_DB = os.getenv("POSTGRES_DB")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
-POSTGRES_USER = os.getenv("POSTGRES_USER")
-POSTGRES_HOST = os.getenv("POSTGRES_HOST")
-POSTGRES_PORT = os.getenv("POSTGRES_PORT")
-
-POSTGRES_READY = (
-    POSTGRES_DB is not None
-    and POSTGRES_PASSWORD is not None
-    and POSTGRES_USER is not None
-    and POSTGRES_HOST is not None
-    and POSTGRES_PORT is not None
-)
-
-if POSTGRES_READY:
-    DATABASES = {
-        "default": {
-            "ENGINE": 'django.db.backends.postgresql_psycopg2',
-            "NAME": POSTGRES_DB,
-            "USER": POSTGRES_USER,
-            "PASSWORD": POSTGRES_PASSWORD,
-            "HOST": POSTGRES_HOST,
-            "PORT": POSTGRES_PORT,
-        }
-    }
+database_url = os.environ.get("DATABASE_URL")
+DATABASES["default"] = dj_database_url.parse(database_url)
 
 
 AUTH_PASSWORD_VALIDATORS = [
