@@ -22,7 +22,7 @@ class Profile(models.Model):
     edited_username = models.CharField(max_length=30, default="")
 
     def total_points(self):
-        total_points = self.correct_wins * 3 + self.correct_results + self.bonus_points
+        total_points = self.correct_wins * 2 + self.correct_results + self.bonus_points
         return total_points
 
     def show_username(self):

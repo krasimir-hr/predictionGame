@@ -26,22 +26,22 @@ def calc_points_and_gather_wins_and_results(sender, instance, **kwargs):
                 if match_type == 'BO1':
                     if bet_team1_score > bet_team2_score:
                         if match_team1_score > match_team2_score:
-                            bet.bet_points += 3
+                            bet.bet_points += 2
                             profile.correct_wins += 1
                     elif bet_team2_score > bet_team1_score:
                         if match_team2_score > match_team1_score:
-                            bet.bet_points += 3
+                            bet.bet_points += 2
                             profile.correct_wins += 1
 
                 elif match_type == 'BO3':
                     if match_team1_score == 2 and bet_team1_score == 2:
-                        bet.bet_points += 3
+                        bet.bet_points += 2
                         profile.correct_wins += 1
                         if match_team2_score == bet_team2_score:
                             bet.bet_points += 1
                             profile.correct_results += 1
                     elif match_team2_score == 2 and bet_team2_score == 2:
-                        bet.bet_points += 3
+                        bet.bet_points += 2
                         profile.correct_wins += 1
                         if match_team1_score == bet_team1_score:
                             bet.bet_points += 1
@@ -49,13 +49,13 @@ def calc_points_and_gather_wins_and_results(sender, instance, **kwargs):
 
                 elif match_type == 'BO5':
                     if match_team1_score == 3 and bet_team1_score == 3:
-                        bet.bet_points += 3
+                        bet.bet_points += 2
                         profile.correct_wins += 1
                         if match_team2_score == bet_team2_score:
                             bet.bet_points += 1
                             profile.correct_results += 1
                     elif match_team2_score == 3 and bet_team2_score == 3:
-                        bet.bet_points += 3
+                        bet.bet_points += 2
                         profile.correct_wins += 1
                         if match_team1_score == bet_team1_score:
                             bet.user.profile.correct_results += 1
