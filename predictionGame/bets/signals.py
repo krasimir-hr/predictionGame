@@ -58,7 +58,7 @@ def calc_points_and_gather_wins_and_results(sender, instance, **kwargs):
                         bet.bet_points += 2
                         profile.correct_wins += 1
                         if match_team1_score == bet_team1_score:
-                            bet.user.profile.correct_results += 1
+                            bet.bet_points += 1
                             profile.correct_results += 1
 
                 bet.save()
