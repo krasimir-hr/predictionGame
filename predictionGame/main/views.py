@@ -22,7 +22,7 @@ class HomePageView(TemplateView):
         current_user = self.request.user
         users_with_points = User.objects.annotate(
             total_points=ExpressionWrapper(
-                F('profile__correct_wins') * 3 + F('profile__correct_results'),
+                F('profile__correct_wins') * 3 + F('profile__correct_results') + F('profile__bonus_points'),
                 output_field=IntegerField()
             )
         )
