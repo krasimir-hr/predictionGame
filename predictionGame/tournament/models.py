@@ -17,12 +17,12 @@ class Team(models.Model):
 class Player(models.Model):
     name = models.CharField(max_length=255)
     display_name = models.CharField(max_length=255, blank=True, null=True)
-    total_games = models.IntegerField(blank=True, null=True)
-    total_dmg = models.IntegerField(blank=True, null=True)
-    total_cs = models.IntegerField(blank=True, null=True)
-    total_kills = models.IntegerField(blank=True, null=True)
-    total_assists = models.IntegerField(blank=True, null=True)
-    total_deaths = models.IntegerField(blank=True, null=True)
+    total_games = models.IntegerField(blank=True, null=True, default=0)
+    total_dmg = models.IntegerField(blank=True, null=True, default=0)
+    total_cs = models.IntegerField(blank=True, null=True, default=0)
+    total_kills = models.IntegerField(blank=True, null=True, default=0)
+    total_assists = models.IntegerField(blank=True, null=True, default=0)
+    total_deaths = models.IntegerField(blank=True, null=True, default=0)
 
     def __str__(self):
         return f'{self.name} - Kills: {self.total_kills}, Assists: {self.total_assists}, Deaths: {self.total_deaths}'
