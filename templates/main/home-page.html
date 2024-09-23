@@ -17,9 +17,11 @@
                         <div class="predictions">
                             {% for match in user_pending_matches %}
                                 <div class="predictions-container">
-                                    <a class="refresh-match" href="{% url 'scrape_match' match_id=match.match_id %}">
-                                        <i class="fa-solid fa-arrows-rotate"></i>
-                                    </a>
+                                    {% if user.is_superuser %}
+                                    	<a class="refresh-match" href="{% url 'scrape_match' match_id=match.match_id %}">
+                                            <i class="fa-solid fa-arrows-rotate"></i>
+                                        </a>
+                                    {% endif %}
                                     <a onclick="expandGame('match-{{ match.match_id }}', 'expand-{{ match.match_id }}')"
                                        class="expand-game">
                                         <i id="expand-{{ match.match_id }}" class="fa-solid fa-chevron-down arrow"></i>
@@ -242,9 +244,11 @@
                     {% for match in matches %}
                         <div class="predictions">
                         <div class="predictions-container">
-                            <a class="refresh-match" href="{% url 'scrape_match' match_id=match.match_id %}">
-                                <i class="fa-solid fa-arrows-rotate"></i>
-                            </a>
+                            {% if user.is_superuser %}
+                                    	<a class="refresh-match" href="{% url 'scrape_match' match_id=match.match_id %}">
+                                            <i class="fa-solid fa-arrows-rotate"></i>
+                                        </a>
+                            {% endif %}
                             <a onclick="expandGame('match-{{ match.match_id }}', 'expand-{{ match.match_id }}')"
                                class="expand-game">
                                 <i id="expand-{{ match.match_id }}" class="fa-solid fa-chevron-down arrow"></i>
