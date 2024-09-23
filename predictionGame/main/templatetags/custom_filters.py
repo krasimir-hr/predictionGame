@@ -19,3 +19,17 @@ def placeholder(value, token):
 @register.filter
 def has_wildcard(user):
     return Wildcards.objects.filter(user=user).exists()
+
+
+@register.filter
+def get(champions, name):
+    return champions.get(name)
+
+
+@register.filter
+def index(list_obj, i):
+    try:
+        return list_obj[i]
+    except IndexError:
+        return None
+

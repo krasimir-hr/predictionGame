@@ -6,65 +6,196 @@
     {% if current_user|has_wildcard %}
 
         <h1>Wildcards</h1>
-        <div class="table-wrap wildcard-table">
-            <table class="standings-table wildcard">
-                <thead>
-                <tr>
-                    <th></th>
-                    {% for wildcard in wildcards %}
-                        <th>
-                            <div class="user-holder">
-                                <a href="{% url 'profile-details' wildcard.user.id %}">
-                                        <img class="user-avatar small"
-                                             src="{{ wildcard.user.profile.profile_picture }}"
-                                             alt="">
-                                    {{ wildcard.user.profile.show_username }}
-                                </a>
-                            </div>
-                        </th>
-                    {% endfor %}
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Most picked champion</td>
-                    {% for wildcard in wildcards %}
-                        <td>{{ wildcard.most_picked_champion }}</td>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    <td>Most banned champion</td>
-                    {% for wildcard in wildcards %}
-                        <td>{{ wildcard.most_banned_champion }}</td>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    <td>Highest winrate champion</td>
-                    {% for wildcard in wildcards %}
-                        <td>{{ wildcard.highest_winrate_champion }}</td>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    <td>Player with most kills</td>
-                    {% for wildcard in wildcards %}
-                        <td>{{ wildcard.player_with_most_kills }}</td>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    <td>Player with most assists</td>
-                    {% for wildcard in wildcards %}
-                        <td>{{ wildcard.player_with_most_assists }}</td>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    <td>Player with most deaths</td>
-                    {% for wildcard in wildcards %}
-                        <td>{{ wildcard.player_with_most_deaths }}</td>
-                    {% endfor %}
-                </tr>
-                </tbody>
-            </table>
+        <div class="tables-container">
+            {% for role, data in role_picks.items %}
+                <div class="wildcard-table">
+                    <h2>{{ data.display_name }}</h2>
+                    <table class="standings-table wildcard">
+                        <thead>
+                            <tr>
+                                <th>User(s)</th>
+                                <th>Champion</th>
+                                <th>Pick Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for pick in data.picks %}
+                            <tr>
+                                <td>
+                                    {% for user in pick.users %}
+                                    	<img class="user-avatar small" src="{{ user.avatar_url }}" alt="">
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {{ pick.champion }}
+                                </td>
+                                <td>{{ pick.pick_count }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="2">No picks available for this role.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+                <div class="wildcard-table">
+                    <h2>Players with most kills</h2>
+                    <table class="standings-table wildcard">
+                        <thead>
+                            <tr>
+                                <th>User(s)</th>
+                                <th>Player</th>
+                                <th>Kills</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for player in players_with_most_kills %}
+                            <tr>
+                                <td>
+                                    {% with user_data=players_user_data.kills|get_item:player.name %}
+                                        {% if user_data %}
+                                            {% for user in user_data %}
+                                                <img class="user-avatar small" src="{{ user.avatar_url }}" alt="" width="30" height="30">
+                                            {% endfor %}
+                                        {% else %}
+                                            No selector
+                                        {% endif %}
+                                    {% endwith %}
+                                </td>
+                                <td>{{ player.display_name|default:player.name }}</td>
+                                <td>{{ player.total_kills }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="wildcard-table">
+                    <h2>Players with most assists</h2>
+                    <table class="standings-table wildcard">
+                        <thead>
+                            <tr>
+                                <th>User(s)</th>
+                                <th>Player</th>
+                                <th>Assists</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for player in players_with_most_assists %}
+                            <tr>
+                                <td>
+                                    {% with user_data=players_user_data.assists|get_item:player.name %}
+                                        {% if user_data %}
+                                            {% for user in user_data %}
+                                                <img class="user-avatar small" src="{{ user.avatar_url }}" alt="" width="30" height="30">
+                                            {% endfor %}
+                                        {% else %}
+                                            No selector
+                                        {% endif %}
+                                    {% endwith %}
+                                </td>
+                                <td>{{ player.display_name|default:player.name }}</td>
+                                <td>{{ player.total_assists }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
+                <div class="wildcard-table">
+                    <h2>Players with most deaths</h2>
+                    <table class="standings-table wildcard">
+                        <thead>
+                            <tr>
+                                <th>User(s)</th>
+                                <th>Player</th>
+                                <th>Kills</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for player in players_with_most_deaths %}
+                            <tr>
+                                <td>
+                                    {% with user_data=players_user_data.deaths|get_item:player.name %}
+                                        {% if user_data %}
+                                            {% for user in user_data %}
+                                                <img class="user-avatar small" src="{{ user.avatar_url }}" alt="" width="30" height="30">
+                                            {% endfor %}
+                                        {% else %}
+                                            No selector
+                                        {% endif %}
+                                    {% endwith %}
+                                </td>
+                                <td>{{ player.display_name|default:player.name }}</td>
+                                <td>{{ player.total_deaths }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="wildcard-table">
+                    <h2>Most banned champion</h2>
+                    <table class="standings-table wildcard">
+                        <thead>
+                            <tr>
+                                <th>User(s)</th>
+                                <th>Champion</th>
+                                <th>Bans</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for champion in banned_champions %}
+                            <tr>
+                                <td>
+                                    {% with user_data=ban_user_data|get_item:champion.name %}
+                                        {% if user_data %}
+                                            {% for user in user_data %}
+                                                <img class="user-avatar small" src="{{ user.avatar_url }}" alt="" width="30" height="30">
+                                            {% endfor %}
+                                        {% else %}
+                                            No selector
+                                        {% endif %}
+                                    {% endwith %}
+                                </td>
+                                <td>{{ champion.name }}</td>
+                                <td>{{ champion.ban_count }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="wildcard-table">
+                    <h2>Tournament winner</h2>
+                    <table class="standings-table wildcard">
+                        <thead>
+                            <tr>
+                                <th>User(s)</th>
+                                <th>Team</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for team in tournament_winners %}
+                            <tr>
+                                <td>
+                                    {% with user_data=tournament_winners_user_data|get_item:team.name %}
+                                        {% if user_data %}
+                                            {% for user in user_data %}
+                                                <img class="user-avatar small" src="{{ user.avatar_url }}" alt="" width="30" height="30">
+                                            {% endfor %}
+                                        {% else %}
+                                            No selector
+                                        {% endif %}
+                                    {% endwith %}
+                                </td>
+                                <td>{{ team.name }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
         </div>
 
     {% else %}
@@ -72,20 +203,40 @@
         <div class="wildcards-wrapper select-wildcards-wrapper">
             <form method="post">
                 {% csrf_token %}
-                <p>Most picked champion</p>
-                {{ form.most_picked_champion }}
+                <p>Most picked top lane champion</p>
+                {{ form.most_picked_top }}
+                <ul id="most-picked-top-champion-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
+                <p>Most picked jungle champion</p>
+                {{ form.most_picked_jgl }}
+                <ul id="most-picked-jgl-champion-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
+                <p>Most picked mid lane champion</p>
+                {{ form.most_picked_mid }}
+                <ul id="most-picked-mid-champion-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
+                <p>Most picked bot lane champion</p>
+                {{ form.most_picked_bot }}
+                <ul id="most-picked-bot-champion-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
+                <p>Most picked support champion</p>
+                {{ form.most_picked_sup }}
+                <ul id="most-picked-sup-champion-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
                 <p>Most banned champion</p>
                 {{ form.most_banned_champion }}
-                <p>Highest winrate champion</p>
-                {{ form.highest_winrate_champion }}
+                <ul id="most-banned-champion-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
                 <p>Player with most kills</p>
                 {{ form.player_with_most_kills }}
+                <ul id="most-kills-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
                 <p>Player with most assists</p>
                 {{ form.player_with_most_assists }}
+                <ul id="most-assists-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
                 <p>Player with most deaths</p>
                 {{ form.player_with_most_deaths }}
+                <ul id="most-deaths-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
+                <p>Tournament winner</p>
+                {{ form.tournament_winner }}
+                <ul id="teams-list" class="suggestion-list" style="list-style:none; padding: 0;" ></ul>
+
                 <button class="save-predictions">Confirm</button>
             </form>
         </div>
     {% endif %}
+    <script src="{% static 'scripts/wildcards.js' %}"></script>
 {% endblock %}

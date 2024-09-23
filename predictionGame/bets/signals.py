@@ -11,13 +11,16 @@ def calc_points_and_gather_wins_and_results(sender, instance, **kwargs):
     match = instance
     bets = match.bet_set.filter(match=match)
 
+    if not match.finished:
+        return
+
     if bets:
         for bet in bets:
             if bet is not None:
                 user = bet.user
                 profile = user.profile
 
-                match_type = match.game_type
+                match_type = match.match_type
                 match_team1_score = match.team1_score
                 match_team2_score = match.team2_score
                 bet_team1_score = bet.team1_score

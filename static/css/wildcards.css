@@ -4,6 +4,7 @@
     border: 1px solid #252525;
     border-radius: 5px;
     background-color: #0a0a0a;
+    position: relative;
 }
 
 .wildcards-wrapper form {
@@ -24,7 +25,10 @@
 
 .wildcard td, .wildcard th {
     border-radius: 0;
+    text-align: center;
 }
+
+
 
 .wildcard th a {
     justify-content: center;
@@ -32,17 +36,72 @@
 
 .wildcard td:first-child {
     font-weight: bold;
+    display: flex;
+    justify-content: center;
 }
 
 .wildcard-table {
-    width: 50%;
     margin: 0 auto;
+
 }
+
+.tables-container {
+    display: grid;
+    margin: 0 50px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.wildcard {
+    border: 1px solid #252525;
+}
+.wildcard-table {
+    margin: 10px;
+}
+
+.wildcard-table img {
+    display: inline-block
+}
+
+.wildcard-table th {
+    border-bottom: 1px solid #252525
+}
+
+.suggestion-list {
+    position: absolute;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+}
+
+.suggestion-list li {
+    padding: 5px 15px;
+    border-bottom: 1px solid #fff;
+}
+
+.suggestion-list li:hover {
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+}
+
 
 @media (max-width: 900px) {
     .select-wildcards-wrapper {
         width: 100%;
         max-width: 100%;
+    }
+
+    .tables-container {
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -55,8 +114,6 @@
     .wildcard-table {
         font-size: 14px;
     }
-
-
 }
 
 @media (max-width: 380px) {

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% load socialaccount %}
+{% block content %}
+
+    <h1>Create a new Match</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}

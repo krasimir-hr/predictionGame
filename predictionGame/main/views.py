@@ -1,17 +1,20 @@
 from datetime import datetime
+from collections import defaultdict
 import json
 
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import redirect
 from django.utils import timezone
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 from django.db.models import ExpressionWrapper, F, IntegerField
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
 
-from predictionGame.bets.forms import BetForm
 from predictionGame.bets.models import Bet
-from predictionGame.tournament.models import Match
-from predictionGame.users.models import Profile
+from predictionGame.tournament.models import Match, Champion
+from predictionGame.tournament.forms import MatchForm
+from predictionGame.bets.forms import BetForm
+from .scraper import construct_match_data
 
 
 class HomePageView(TemplateView):
@@ -34,6 +37,16 @@ class HomePageView(TemplateView):
         pending_matches = unresolved_matches.exclude(users_who_submitted=current_user.id)
         predicted_matches = Match.objects.filter(users_who_submitted=current_user.id).order_by('-match_timedate__date')
 
+        matches_by_date = defaultdict(list)
+        for match in predicted_matches:
+            match_date = match.match_timedate.date()
+            matches_by_date[match_date].append(match)
+
+        context['user_predicted_matches_by_date'] = dict(matches_by_date)
+
+        champions = Champion.objects.all()
+        champions_dict = {champ.name: champ for champ in champions}
+
         datetime_from_db = datetime(2024, 4, 30, 0, 0, 0)  # Example datetime value
 
         matches_ids = predicted_matches.values_list('id', flat=True)
@@ -46,6 +59,8 @@ class HomePageView(TemplateView):
         context['user_predicted_matches'] = predicted_matches
         context['bets_for_matches'] = bets_for_matches
         context['users'] = sorted_users
+        context['champions'] = champions_dict
+        context['form'] = MatchForm()
 
         return context
 
@@ -66,3 +81,23 @@ class HomePageView(TemplateView):
 
                 match.users_who_submitted.add(request.user)
         return HttpResponseRedirect('/')
+
+
+def scrape_match(request, match_id):
+    construct_match_data(match_id)
+
+    return redirect(reverse('home'))
+
+
+class CreateMatchView(CreateView):
+    model = Match
+    form_class = MatchForm
+    template_name = 'main/create_match.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        match_id = form.cleaned_data['match_id']
+        construct_match_data(match_id)
+
+        return response

@@ -16,16 +16,47 @@
     border-radius: 5px;
 }
 
+.predictions-container {
+    border-bottom: 1px solid #252525;
+    position: relative;
+}
+
+.refresh-match {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10000;
+}
+
+.expand-game {
+    position: absolute;;
+    bottom: 10px;
+    right: 50%;
+    z-index: 10000;
+}
+
+.match-dates {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.arrow {
+    display: inline-block;
+    transition: transform 0.5s ease;
+}
+
+.arrow.rotate {
+    transform: rotate(180deg);
+}
+
 .predictions-game, .predictions-game--teams {
     display: flex;
 }
 
 .predictions-game {
     width: 100%;
-    border-bottom: 1px solid #252525;
-    padding: 10px 0;
+    padding: 20px 0 20px 0;
     align-items: center;
-    height: 128px;
 }
 
 .predictions-game--details {
@@ -88,7 +119,7 @@
 }
 
 .team-wrap img {
-    height: 90px;
+    width: 80px;
     margin: 0 auto;
 }
 
@@ -278,7 +309,193 @@ h1, h2 {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-@media (max-width: 1000px) {
+.tabs {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.tabs li {
+    list-style-type: none;
+}
+
+.tabs li button {
+    background: none;
+    color: #bbbbbb;
+    border: none;
+}
+
+.tabs li button:hover {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.tab-content {
+    display: none;
+    padding-bottom: 30px;
+}
+
+.tab-container.expanded .tab-content:first-of-type {
+    display: block;
+}
+
+.player-data {
+    display: flex;
+    gap: 20px;
+}
+
+.game-summary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.game-summary img {
+    height: 30px;
+}
+
+.game-summary--score-length {
+    text-align: center;
+}
+
+.game-score {
+    font-size: 20px;
+    margin: 0;
+}
+
+.game-length {
+    margin: 0;
+}
+
+.team {
+    width: 50%;
+}
+
+.player {
+    padding: 20px;
+    border-bottom: 1px solid #363636;
+}
+
+.player:last-child {
+    border-bottom: none;
+}
+
+.player-info_and_loadout {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+}
+
+.player-basic_info {
+    display: flex;
+}
+
+.champ-img {
+    height: 75px;
+    margin-right: 20px;
+}
+
+.player-loadout {
+    display: flex;
+    gap: 10px;
+}
+
+.player-runes, .player-spells {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+
+.game--player-stats img {
+    height: 20px;
+}
+
+.game--player-stats div {
+    display: flex;
+}
+
+.game--player-stats img {
+    filter: invert(1);
+}
+
+.tab-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s ease;
+    background-color: #0e0e0e;
+}
+
+.tab-container.expanded {
+    max-height: 800px;
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.bans img {
+    height: 35px;
+    filter: grayscale(80%);
+}
+
+.player-name {
+    font-weight: 600;
+    margin: 0 0 -10px 0;
+}
+
+.player-champ {
+    font-style: italic;
+    margin: 0
+}
+
+.player-name_and_champion {
+    display: grid;
+    align-items: center;
+}
+
+.betting-odds {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.betting-odds div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%
+}
+
+.betting-odds p {
+    margin: 0;
+}
+
+.betting-odds img {
+    height: 20px;
+}
+
+.champ-img:last-child {
+    margin: 0
+}
+
+#match-form-container {
+    display: none;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+@media (max-width: 800px) {
     .content-wrap {
         flex-direction: column;
         width: 100%;
@@ -293,6 +510,7 @@ h1, h2 {
         flex-direction: column;
         height: 240px;
         justify-content: space-between;
+        position: relative;
     }
 
     .predict {
@@ -328,11 +546,6 @@ h1, h2 {
     }
 
 
-    .team img {
-        height: 60px;
-        margin: 0 auto;
-    }
-
     .game-type--status {
         display: flex;
         justify-content: space-between;
@@ -356,4 +569,44 @@ h1, h2 {
     .vs {
         margin: 0 5px;
     }
+
+    .player-info_and_loadout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+
+    .champ-img {
+        width: 48px;
+        height: 48px;
+        margin-left: 0;
+    }
+
+    .bans img {
+        width: 24px;
+        height: 24px;
+        margin-right: 2px;
+    }
+
+    .bans {
+        display: flex;
+        align-items: center;
+    }
+
+    .stats--kda img, .stats--cs img, .stats--dmg img, .player-runes img, .player-spells img, .player-items img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .game--player-stats {
+        display: flex;
+        margin: 10px 0;
+    }
+
+    .tab-container.expanded {
+        max-height: 1200px;
+    }
+
 }
