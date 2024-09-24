@@ -127,4 +127,8 @@ input[id="id_username"] {
     input[id="id_username"] {
         width: 196px;
     }
+
+    .profile-avatar-name {
+        width: 50%;
+    }
 }
