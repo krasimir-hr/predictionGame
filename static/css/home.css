@@ -585,8 +585,8 @@ h1, h2 {
     }
 
     .bans img {
-        width: 20px;
-        height: 20px;
+        width: 17px;
+        height: 17px;
         margin-right: 2px;
     }
 
@@ -621,5 +621,9 @@ h1, h2 {
 
     .game-length {
         font-size: 12px;
+    }
+
+    .match-header {
+        padding: 0 7px;
     }
 }
