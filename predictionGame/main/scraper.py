@@ -17,6 +17,8 @@ def construct_match_data(match_id):
     result = scrape_result(soup)
     number_of_games = 0
 
+    team_1_score, team_2_score = 0, 0
+
     if '–' in result:
         team_1_score, team_2_score = [int(x) for x in result.split('–')]
         number_of_games = sum([int(x) for x in result.split('–')])
@@ -35,8 +37,8 @@ def construct_match_data(match_id):
         defaults={
             'team_1': team_1,
             'team_2': team_2,
-            'team1_score': team_1_score if team_1_score else 0,
-            'team2_score': team_2_score if team_2_score else 0,
+            'team1_score': team_1_score,
+            'team2_score': team_2_score,
         }
     )
     if number_of_games > 0:
