@@ -35,8 +35,8 @@ def construct_match_data(match_id):
         defaults={
             'team_1': team_1,
             'team_2': team_2,
-            'team1_score': team_1_score or 0,
-            'team2_score': team_2_score or 0,
+            'team1_score': team_1_score if team_1_score else 0,
+            'team2_score': team_2_score if team_2_score else 0,
         }
     )
     if number_of_games > 0:
