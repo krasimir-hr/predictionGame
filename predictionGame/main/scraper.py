@@ -164,6 +164,8 @@ def construct_games_data(soup, number_of_games):
 def scrape_side_imgs(soup):
     game_summary_imgs = []
     game_summary_img_divs = soup.findAll("div", attrs={"class": "match-bm-lol-game-summary-faction"})
+    if len(game_summary_img_divs) == 0:
+        game_summary_img_divs = soup.findAll("div", attrs={"class": "match-bm-lol-game-summary-team"})
     for div in game_summary_img_divs:
         img = div.find("img")
         img_src = "https://liquipedia.net" + img['src']
