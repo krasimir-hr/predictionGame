@@ -32,6 +32,8 @@ def construct_match_data(match_id):
     team_1 = get_or_create_team(team_names[0])
     team_2 = get_or_create_team(team_names[1])
 
+    curr_match = Match.objects.filter(match_id=match_id)[0]
+
     match, created = Match.objects.update_or_create(
         match_id=match_id,
         defaults={
@@ -41,27 +43,26 @@ def construct_match_data(match_id):
             'team2_score': team_2_score,
         }
     )
-    if number_of_games > 0:
-        games_data = construct_games_data(soup, number_of_games)
-        for i in range(number_of_games):
-            game_data = games_data.pop(0)
-            game, create = Game.objects.update_or_create(
-                game_number=i + 1,
-                match=match,
-                defaults={
-                    'team_1_picks_json': game_data['picks']['team1'],
-                    'team_2_picks_json': game_data['picks']['team2'],
-                    'team_1_bans_json': game_data['bans']['team1'],
-                    'team_2_bans_json': game_data['bans']['team2'],
-                    'team_1_team_stats_json': game_data['team_stats']['team1'],
-                    'team_2_team_stats_json': game_data['team_stats']['team2'],
-                    'team_1_players_stats_json': game_data['player_stats']['team1'],
-                    'team_2_players_stats_json': game_data['player_stats']['team2'],
-                    'side_imgs': game_data['side_imgs'],
-                    'score': game_data['score'],
-                    'length': game_data['length'],
-                }
-            )
+    games_data = construct_games_data(soup, number_of_games)
+    for i in range(number_of_games):
+        game_data = games_data.pop(0)
+        game, create = Game.objects.update_or_create(
+            game_number=i + 1,
+            match=match,
+            defaults={
+                'team_1_picks_json': game_data['picks']['team1'],
+                'team_2_picks_json': game_data['picks']['team2'],
+                'team_1_bans_json': game_data['bans']['team1'],
+                'team_2_bans_json': game_data['bans']['team2'],
+                'team_1_team_stats_json': game_data['team_stats']['team1'],
+                'team_2_team_stats_json': game_data['team_stats']['team2'],
+                'team_1_players_stats_json': game_data['player_stats']['team1'],
+                'team_2_players_stats_json': game_data['player_stats']['team2'],
+                'side_imgs': game_data['side_imgs'],
+                'score': game_data['score'],
+                'length': game_data['length'],
+            }
+        )
 
 
 
