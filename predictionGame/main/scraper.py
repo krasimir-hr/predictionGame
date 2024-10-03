@@ -44,7 +44,11 @@ def construct_match_data(match_id):
         }
     )
     games_data = construct_games_data(soup, number_of_games)
-    for i in range(number_of_games):
+    range_idx = 1
+    if number_of_games > 1:
+        range_idx = number_of_games
+
+    for i in range(range_idx):
         game_data = games_data.pop(0)
         game, create = Game.objects.update_or_create(
             game_number=i + 1,
@@ -63,7 +67,6 @@ def construct_match_data(match_id):
                 'length': game_data['length'],
             }
         )
-
 
 
 def scrape_team_names(soup):
