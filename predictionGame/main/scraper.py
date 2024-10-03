@@ -63,7 +63,7 @@ def construct_match_data(match_id):
                     'team_1_players_stats_json': game_data['player_stats']['team1'],
                     'team_2_players_stats_json': game_data['player_stats']['team2'],
                     'side_imgs': game_data['side_imgs'],
-                    'score': game_data['score'],
+                    'score': game_data['score'] if game_data['score'] else '',
                     'length': game_data['length'],
                 }
             )
