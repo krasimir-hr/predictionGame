@@ -146,7 +146,7 @@ def construct_games_data(soup, number_of_games):
         game_data["team_stats"]["team1"]["drakes"] = team_stats.pop(0)
         game_data["team_stats"]["team2"]["drakes"] = team_stats.pop(0)
 
-        if game_data['score']:
+        if len(scores) > 0:
             game_data['score'] = scores.pop(0)
         game_data['length'] = lengths.pop(0)
 
