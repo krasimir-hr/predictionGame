@@ -42,6 +42,8 @@ class HomePageView(TemplateView):
             match_date = match.match_timedate.date()
             matches_by_date[match_date].append(match)
 
+        for match_date in matches_by_date:
+            matches_by_date[match_date].sort(key=lambda x: x.match_timedate)
         context['user_predicted_matches_by_date'] = dict(matches_by_date)
 
         champions = Champion.objects.all()
