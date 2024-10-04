@@ -68,7 +68,6 @@ def construct_match_data(match_id):
             )
 
 
-
 def scrape_team_names(soup):
     team_name_divs = soup.findAll("div", attrs={"class": "match-bm-lol-match-header-team-long"})
     team_names = []
@@ -79,7 +78,10 @@ def scrape_team_names(soup):
 
 
 def scrape_result(soup):
-    result = soup.find("div", attrs={"class": "match-bm-lol-match-header-result"}).text
+    try:
+        result = soup.find("div", attrs={"class": "match-bm-lol-match-header-result"}).text
+    except AttributeError:
+        result = '-'
     if result == '–':
         return '0–0'
     return result
@@ -200,7 +202,10 @@ def scrape_picks_bans(soup):
     for ul in bans_uls:
         bans_lis = ul.findAll("li", attrs={"class": "match-bm-lol-game-veto-overview-item"})
         for li in bans_lis:
-            champ_name = li.find("a").get('title')
+            try:
+                champ_name = li.find("a").get('title')
+            except AttributeError:
+                champ_name = 'TYPE IN MANUALLY'
             banned_champs.append(champ_name)
             ban = Champion.objects.filter(name=champ_name).update(ban_count=F('ban_count') + 1)
 
@@ -283,7 +288,7 @@ def construct_player_data(soup, number_of_games):
                     total_kills=current_kills,
                     total_assists=current_assists,
                     total_deaths=current_deaths,
-            )
+                )
 
     for i in range(number_of_games):
         append_player_to_team(team_1_players)
