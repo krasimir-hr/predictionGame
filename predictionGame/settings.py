@@ -48,8 +48,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'email',
         ],
         'APP': {
-            'client_id': os.environ['CLIENT_ID'],
-            'secret': os.environ['CLIENT_SECRET'],
+            'client_id': '1012061683026-hhe57b0m7gef71on4btjvmss24jab61k.apps.googleusercontent.com',
+            'secret': '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',
         },
         'AUTH_PARAMS': {
             'access_type': 'online',
@@ -106,13 +106,17 @@ DATABASES = {
     }
 }
 
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'prediction_db',
+        'USER': 'dbuser',
+        'PASSWORD': '951202',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # database_url = os.environ.get("DATABASE_URL")
 # DATABASES["default"] = dj_database_url.parse(database_url)
