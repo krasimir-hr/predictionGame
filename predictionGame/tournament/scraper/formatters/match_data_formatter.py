@@ -20,16 +20,22 @@ class MatchDataFormatter:
       team_2_data = {}
 
       for key, values in items:
-         team_1_data[key[:-1] if key.endswith('s') else key] = values[0]
-         team_2_data[key[:-1] if key.endswith('s') else key] = values[1]
-      
+        cleaned_key = key[:-1] if key.endswith('s') else key
+
+        if isinstance(values, list):
+            team_1_data[cleaned_key] = values[0] if len(values) > 0 else "unknown"
+            team_2_data[cleaned_key] = values[1] if len(values) > 1 else "unknown"
+        else:
+            team_1_data[cleaned_key] = "unknown"
+            team_2_data[cleaned_key] = "unknown"
+
       return [team_1_data, team_2_data]
    
    def parse_number_of_match_tabs(self):
       return self.initial_raw_data['number_of_match_tabs']
    
    def calculate_total_games(self):
-      if not self.match_finished:
+      if not self.match_finished():
          total_games = self.parse_number_of_match_tabs()
          return total_games
       raw_result = self.final_raw_data['final_result']
@@ -42,8 +48,8 @@ class MatchDataFormatter:
    def structure_initial_data(self):
       status = self.parse_match_status()
       timestamp = self.parse_timestamp()
-      teams = self.parse_team_names()
       total_games = self.calculate_total_games()
+      teams = self.parse_team_names()
       return {
          'status': status,
          'timestamp': timestamp,
@@ -123,6 +129,9 @@ class MatchDataFormatter:
          })
       return players
    
+   def parse_bans(self):
+      return self.final_raw_data['bans']
+   
    def parse_team_stats(self):
       return self.final_raw_data['team_stats']
    
@@ -160,10 +169,17 @@ class MatchDataFormatter:
    def parse_side_selections(self):
       return self.final_raw_data['side_selections']
    
+   def parse_game_lengths(self):
+      return self.final_raw_data['lengths']
+   
+   def parse_final_result(self):
+      return self.final_raw_data['final_result'].split('–')
+   
    def structure_teams_data(self):
       all_team_stats = self.structure_team_stats_dict()
       all_players = self.structure_players_dict()
       all_side_selections = self.parse_side_selections()
+      all_bans = self.parse_bans()
 
       teams_data = []
       while all_team_stats:
@@ -171,6 +187,7 @@ class MatchDataFormatter:
             'team_stats': all_team_stats.pop(0),
             'side_selection': all_side_selections.pop(0),
             'player_stats': [all_players.pop(0) for _ in range(5)],
+            'bans': [all_bans.pop(0) for _ in range(5)],
          }
          teams_data.append(curr_team_data)
 
@@ -178,23 +195,37 @@ class MatchDataFormatter:
    
    def structure_game_data(self):
       all_teams = self.structure_teams_data()
+      lengths = self.parse_game_lengths()
+      
       games = []
 
       while all_teams:
          games.append({
             'team_1': all_teams.pop(0),
             'team_2': all_teams.pop(0),
+            'length': lengths.pop(0),
          })
       return games
-
       
    def structure_final_match_data(self):
-      number_of_games = self.calculate_total_games()
-      all_games = self.structure_game_data()
+      if not self.match_finished():
+         return
 
-      match = {}
+      number_of_games = self.calculate_total_games()
+      
+      all_games = self.structure_game_data()
+      final_result = self.parse_final_result()
+
+      match = {
+         'team_1_score': final_result[0],
+         'team_2_score': final_result[1],
+         'games': []
+         }
+      
+      
       for i in range(number_of_games):
-         match[f'game_{i + 1}'] = all_games.pop(0)
+         match['games'].append({f'game_{i + 1}': all_games.pop(0)})
+      
       return match
 
 

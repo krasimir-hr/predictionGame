@@ -1,13 +1,23 @@
 body {
-    background-color: #000;
     box-sizing: border-box;
     margin: 0;
-    font-family: "Lato", serif;
+    font-family: "Geist", serif;
     color: #bbbbbb;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: #000000;
+    /* Complex background layering */
+    background-image:
+        /* Subtle glow 1 (top-left ish) */
+        radial-gradient(circle at 20% 25%, rgba(113, 103, 131, 0.2) 0%, transparent 40%),
+        /* Subtle glow 2 (bottom-right ish) */
+        radial-gradient(circle at 90% 85%, rgba(40, 30, 60, 0.2) 0%, transparent 40%),
+        /* Overall very subtle large glow */
+        radial-gradient(circle at center, rgba(30, 20, 50, 0.1) 0%, transparent 70%);
 }
+
+
 
 main {
     flex: 1;

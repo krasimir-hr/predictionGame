@@ -5,7 +5,7 @@ from predictionGame.tournament.models import Match, Team
 
 
 class Bet(models.Model):
-    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="bets")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     team1_score = models.IntegerField()
     team2_score = models.IntegerField()

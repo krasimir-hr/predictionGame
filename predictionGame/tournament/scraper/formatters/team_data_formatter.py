@@ -1,4 +1,4 @@
-from scrapers.lolesports_scrapers.logo_scraper import LogoScrapper
+from predictionGame.tournament.scraper.scrapers.lolesports_scrapers.logo_scraper import LogoScrapper
 
 TEAM_ABBREVIATIONS = {
     "Gen.G Esports": "GEN",

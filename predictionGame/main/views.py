@@ -11,10 +11,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 
 from predictionGame.bets.models import Bet
-from predictionGame.tournament.models import Match, Champion
+from predictionGame.tournament.models import Match, Champion, Player
 from predictionGame.tournament.forms import MatchForm
 from predictionGame.bets.forms import BetForm
-from .scraper import construct_match_data
 
 
 class HomePageView(TemplateView):
@@ -36,6 +35,19 @@ class HomePageView(TemplateView):
         unresolved_matches = Match.objects.filter(match_timedate__gt=timezone.now())
         pending_matches = unresolved_matches.exclude(users_who_submitted=current_user.id)
         predicted_matches = Match.objects.filter(users_who_submitted=current_user.id).order_by('-match_timedate__date')
+
+        for match in predicted_matches:
+            for game in match.games.all():
+                for side in ['team_1_players_stats_json', 'team_2_players_stats_json']:
+                    player_list = getattr(game, side, [])
+                    
+                    for player in player_list:
+                        player_name = player.get("name")
+                        try:
+                            player_obj = Player.objects.get(name=player_name)
+                        except Player.DoesNotExist:
+                            player_obj = None
+                        player["player_obj"] = player_obj
 
         matches_by_date = defaultdict(list)
         for match in predicted_matches:
@@ -85,12 +97,6 @@ class HomePageView(TemplateView):
         return HttpResponseRedirect('/')
 
 
-def scrape_match(request, match_id):
-    construct_match_data(match_id)
-
-    return redirect(reverse('home'))
-
-
 class CreateMatchView(CreateView):
     model = Match
     form_class = MatchForm
@@ -100,6 +106,5 @@ class CreateMatchView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         match_id = form.cleaned_data['match_id']
-        construct_match_data(match_id)
 
         return response

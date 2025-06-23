@@ -6,7 +6,7 @@ from django.db.models import Count, Q
 from django.http import JsonResponse
 
 from .models import Wildcards
-from predictionGame.tournament.models import Pick, Champion, Player, Team
+from predictionGame.tournament.models import Champion, Player, Team
 from .forms import WildCardsForm
 
 

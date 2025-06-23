@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 from typing import Optional, List, Dict
 import requests
 
+from urllib.parse import urljoin
+
 
 class MatchPageScraper:
    def __init__(self, url):
@@ -11,7 +13,8 @@ class MatchPageScraper:
 
    def fetch_page(self):
       try:
-         response = self.session.get(self.base_url + self.url)
+         full_url = urljoin(self.base_url, self.url)
+         response = self.session.get(full_url)
          response.raise_for_status()
       except requests.RequestException as e:
          print(f"Failed to retreive page: {e}")
@@ -55,7 +58,10 @@ class MatchPageScraper:
    
    def extract_match_start_time(self, soup):
       time_element = soup.select_one('span.timer-object')
-      return time_element['data-timestamp']
+      if time_element and 'data-timestamp' in time_element.attrs:
+        return time_element['data-timestamp']
+      else:
+        return None
    
    def fetch_initial_data(self):
       soup = self.fetch_page()
@@ -63,6 +69,8 @@ class MatchPageScraper:
       full_names = self.extract_full_team_names(soup)
       short_names = self.extract_short_team_names(soup)
       timestamp = self.extract_match_start_time(soup)
+      if not timestamp:
+         timestamp = None
       number_of_match_tabs = self.extract_number_of_match_tabs(soup)
 
       return {
@@ -108,9 +116,26 @@ class MatchPageScraper:
    def extract_final_results(self, soup):
       result_element = soup.select_one('div.match-bm-match-header-result')
       return ''.join(result_element.find_all(string=True, recursive=False)).strip()
+   
+   def extract_bans(self, soup):
+      ban_elements = soup.select('div.match-bm-game-veto-overview-team-veto-row.match-bm-game-veto-overview-team-veto-row--ban > div.match-bm-game-veto-overview-team-veto-row-item > div.match-bm-game-veto-overview-team-veto-row-item-icon > a')
+      clean_ban_elements = []
+      for i in range(0, len(ban_elements), 20):
+         clean_ban_elements.extend(ban_elements[i:i+10])
+   
+      return [ban['title'] for ban in clean_ban_elements]
+   
+   def extract_games_length(self, soup):
+      length_elements = soup.select('div.match-bm-lol-game-summary-length')
+      return [game_length.get_text(strip=True) for game_length in length_elements]
      
    def fetch_finished_data(self):
       soup = self.fetch_page()
+
+      match_status = self.extract_match_status(soup)
+
+      if not match_status == 'finished':
+         return
 
       player_names = self.extract_player_names(soup)
       player_champions = self.extract_player_champions(soup)
@@ -124,6 +149,9 @@ class MatchPageScraper:
       game_results = self.extract_game_results(soup)
       side_selections = self.extract_side_selections(soup)
 
+      bans = self.extract_bans(soup)
+      lengths = self.extract_games_length(soup)
+
       return {
          'player_names': player_names, 
          'player_champions': player_champions,
@@ -134,4 +162,6 @@ class MatchPageScraper:
          'final_result': final_result,
          'game_results': game_results,
          'side_selections': side_selections,
+         'bans': bans,
+         'lengths': lengths,
          }

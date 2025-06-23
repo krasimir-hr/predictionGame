@@ -27,8 +27,3 @@ class LogoScrapper:
       logo_url = soup.find("img", alt=self.abbrevation)['src']
       logo_url = self.url_decoder(logo_url)
       return logo_url
-   
-
-scrapper = LogoScrapper('T1')
-
-print(scrapper.extract_logo_urls())

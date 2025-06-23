@@ -10,6 +10,7 @@ urlpatterns = [
     path('', include('predictionGame.main.urls')),
     path('wildcards/', views.WildcardsView.as_view(), name='wildcards'),
     path('users/', include('predictionGame.users.urls')),
+    path('tournament/', include('predictionGame.tournament.urls')),
     path('search-champions/', views.search_champions, name='search_champions'),
     path('search-players/', views.search_players, name='search-players'),
     path('search-teams/', views.search_teams, name='search-teams'),

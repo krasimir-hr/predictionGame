@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Team, Match, Game, Champion, Player, Pick
+from .models import Team, Match, Game, Champion, Player, Item, SummonerSpell, Rune
 from django.utils.safestring import mark_safe
 
 import json
@@ -25,12 +25,20 @@ class GameAdmin(admin.ModelAdmin):
 class ChampionAdmin(admin.ModelAdmin):
     pass
 
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Rune)
+class RuneAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(SummonerSpell)
+class SummonerSpellAdmin(admin.ModelAdmin):
+    pass
+
 
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     pass
 
-
-@admin.register(Pick)
-class PickAdmin(admin.ModelAdmin):
-    pass
