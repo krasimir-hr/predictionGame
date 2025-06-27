@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% load static %} {% load custom_filters %} {% load socialaccount %} {% block content %} 
 {% if user.is_authenticated %} 
-
-{% if finished_matches %}
 <h1 class="header-title">Finished matches</h1>
+{% if finished_matches %}
+
 {% endif %} {% for match_ctx in finished_matches %}
 <div class="match-card" data-card-id="{{ match_ctx.match.match_id }}">
    <div class="match-wrapper">
