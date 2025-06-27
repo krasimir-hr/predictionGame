@@ -9,7 +9,7 @@ from predictionGame.tournament.models import Match
 @receiver(post_save, sender=Match)
 def calc_points_and_gather_wins_and_results(sender, instance, **kwargs):
     match = instance
-    bets = match.bet_set.filter(match=match)
+    bets = match.bets.all()
 
     if not match.finished:
         return
