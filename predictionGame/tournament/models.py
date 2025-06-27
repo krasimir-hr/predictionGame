@@ -9,6 +9,7 @@ class Team(models.Model):
     name = models.CharField(max_length=50)
     display_name = models.CharField(max_length=50, null=True, blank=True)
     logo = models.URLField(null=True, blank=True)
+    color = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -87,6 +88,7 @@ class Game(models.Model):
     length = models.CharField(max_length=255, blank=True, null=True)
     team_1_side_selection = models.CharField(max_length=255, blank=True, null=True)
     team_2_side_selection = models.CharField(max_length=255, blank=True, null=True)
+    result = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return f'{self.match} - Game {self.game_number}'

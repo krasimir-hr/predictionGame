@@ -49,6 +49,63 @@
          <div>
             {% for game_number, game_data in players_by_game.items %}
             <h3>Game {{ game_number }}</h3>
+            <div class="game-stats">
+               <div class="team-global-stats">
+                  <span class="drakes stat-wrap">
+                     <img src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png" alt="" class="image-icon dragon game-icon">
+                     {{ game_data.team_1_stats.dragons }}
+                  </span>
+                  <span class="barons stat-wrap">
+                     <img src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png" alt="" class="image-icon baron game-icon">
+                     {{ game_data.team_1_stats.barons }}
+                  </span>
+                  <span class="inhibs stat-wrap">
+                     <img src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png" alt="" class="image-icon inhib game-icon">
+                     {{ game_data.team_1_stats.inhibitors }}
+                  </span>
+                  <span class="towers stat-wrap">
+                     <img src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png" alt="" class="image-icon tower game-icon">
+                     {{ game_data.team_1_stats.towers }}
+                  </span>
+                  <span class="gold stat-wrap"> 
+                     <i class="fa-solid fa-coins gold-icon game-icon"></i>
+                     {{ game_data.team_2_stats.gold}}
+                  </span>
+               </div>
+               <div class="player-stats-btns">
+                  <span class="dmg-btn">
+                     <span class="material-symbols-outlined kda-stats game-icon">swords</span>
+                  </span>
+                  <span class="gold-btn">
+                     <i class="fa-solid fa-coins gold-icon game-icon"></i>
+                  </span>
+                  <span class="cs-btn">
+                     <img src="https://liquipedia.net/commons/images/thumb/f/f4/Lol_stat_icon_cs.png/20px-Lol_stat_icon_cs.png" alt="">
+                  </span>
+               </div>
+               <div class="team-global-stats">
+                  <span class="gold stat-wrap"> 
+                     <i class="fa-solid fa-coins gold-icon game-icon"></i>
+                     {{ game_data.team_2_stats.gold}}
+                  </span>
+                  <span class="towers stat-wrap">
+                     <img src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png" alt="" class="image-icon dragon game-icon">
+                     {{ game_data.team_2_stats.towers }}
+                  </span>
+                  <span class="inhibs stat-wrap">
+                     <img src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png" alt="" class="image-icon baron game-icon">
+                     {{ game_data.team_2_stats.inhibitors }}
+                  </span>
+                  <span class="barons stat-wrap">
+                     <img src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png" alt="" class="image-icon inhib game-icon">
+                     {{ game_data.team_2_stats.barons }}
+                  </span>
+                  <span class="drakes stat-wrap">
+                     <img src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png" alt="" class="image-icon tower game-icon">
+                     {{ game_data.team_2_stats.dragons }}
+                  </span>
+               </div>
+            </div>
             <div class="teams">
                <div class="team-stats">
                   {% for player in game_data.team1 %}
@@ -93,6 +150,18 @@
                   </div>
                   {% endfor %}
                </div>
+               <div class="versus">
+                  {% for _ in 5|times %}
+                  <div class="stat-diff-wrapper">
+                     <div class="stat-diff">
+                        <span class="material-symbols-outlined arrow left">arrow_left</span>
+                        <span>1.8K</span>
+                        <span class="material-symbols-outlined arrow right">arrow_right</span>
+                     </div>
+                     <div class="rounded-line"></div>
+                  </div>
+                  {% endfor %}
+               </div>
                <div class="team-stats">
                   {% for player in game_data.team2 %}
                   <div class="player-stats">
@@ -134,35 +203,11 @@
                         {% endfor %}
                      </div>
                   </div>
-                  
                   {% endfor %}
                </div>
             </div>
             {% endfor %}
          </div>
       </div>
-      <span class="material-symbols-outlined kda game-icon">swords</span>
-      <i class="fa-solid fa-coins gold game-icon"></i>
-      <img src="https://liquipedia.net/commons/images/2/2e/Lol_role_top_icon_darkmode.svg" alt="" class="image-icon role">
-      <img src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png" alt="" class="image-icon tower game-icon">
-      <img src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png" alt="" class="image-icon inhib game-icon">
-      <img src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png" alt="" class="image-icon baron game-icon">
-      <img src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png" alt="" class="image-icon dragon game-icon">
-      
-      <h1>{{ match.team_1.name }} vs {{ match.team_2.name }}</h1>
-      <p>Type: {{ match.match_type }}</p>
-      <p>Score: {{ match.team1_score }} - {{ match.team2_score }}</p>
-      <p>Date: {{ match.match_timedate }}</p>
-
-      <h2>Games:</h2>
-      <ul>
-      {% for game in match.games.all %}
-         <li>Game {{ game.game_number }} - MVP: {{ game.mvp }}</li>
-         <li>{{ game.team_1_bans_json }}</li>
-      {% empty %}
-         <li>No games found for this match.</li>
-      {% endfor %}
-      </ul>
-
    {% endif %}
 {% endblock %}

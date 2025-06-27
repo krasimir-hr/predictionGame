@@ -11,10 +11,9 @@ urlpatterns = [
     path('wildcards/', views.WildcardsView.as_view(), name='wildcards'),
     path('users/', include('predictionGame.users.urls')),
     path('tournament/', include('predictionGame.tournament.urls')),
-    path('search-champions/', views.search_champions, name='search_champions'),
-    path('search-players/', views.search_players, name='search-players'),
-    path('search-teams/', views.search_teams, name='search-teams'),
     path('accounts/', include('allauth.urls')),
+    path('submit-bet/', views.submit_bet, name='submit_bet'),
+    path('submit-wildcard/', views.submit_wildcard, name='submit-wildcard'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

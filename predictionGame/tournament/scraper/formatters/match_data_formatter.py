@@ -196,7 +196,7 @@ class MatchDataFormatter:
    def structure_game_data(self):
       all_teams = self.structure_teams_data()
       lengths = self.parse_game_lengths()
-      
+      results = self.parse_game_results()
       games = []
 
       while all_teams:
@@ -204,6 +204,7 @@ class MatchDataFormatter:
             'team_1': all_teams.pop(0),
             'team_2': all_teams.pop(0),
             'length': lengths.pop(0),
+            'result': results.pop(0),
          })
       return games
       

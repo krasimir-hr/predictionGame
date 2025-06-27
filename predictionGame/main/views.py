@@ -21,60 +21,25 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        current_user = self.request.user
-        users_with_points = User.objects.annotate(
-            total_points=ExpressionWrapper(
-                F('profile__correct_wins') * 3 + F('profile__correct_results') + F('profile__bonus_points'),
-                output_field=IntegerField()
-            )
-        )
 
-        # Sort users by total points in descending order
-        sorted_users = users_with_points.order_by('-total_points', '-profile__correct_results')
+        from predictionGame.tournament.utils import build_match_context
 
-        unresolved_matches = Match.objects.filter(match_timedate__gt=timezone.now())
-        pending_matches = unresolved_matches.exclude(users_who_submitted=current_user.id)
-        predicted_matches = Match.objects.filter(users_who_submitted=current_user.id).order_by('-match_timedate__date')
+        finished_matches = Match.objects.filter(finished=True).order_by("-match_timedate")
+        upcoming_matches = Match.objects.filter(finished=False).order_by("match_timedate")
 
-        for match in predicted_matches:
-            for game in match.games.all():
-                for side in ['team_1_players_stats_json', 'team_2_players_stats_json']:
-                    player_list = getattr(game, side, [])
-                    
-                    for player in player_list:
-                        player_name = player.get("name")
-                        try:
-                            player_obj = Player.objects.get(name=player_name)
-                        except Player.DoesNotExist:
-                            player_obj = None
-                        player["player_obj"] = player_obj
+        user_bets = Bet.objects.filter(user=self.request.user).select_related('match')
 
-        matches_by_date = defaultdict(list)
-        for match in predicted_matches:
-            match_date = match.match_timedate.date()
-            matches_by_date[match_date].append(match)
+        bets_dict = {
+            bet.match.match_id: {
+                'team1_score': bet.team1_score,
+                'team2_score': bet.team2_score,
+            }
+            for bet in user_bets
+        }
 
-        for match_date in matches_by_date:
-            matches_by_date[match_date].sort(key=lambda x: x.match_timedate)
-        context['user_predicted_matches_by_date'] = dict(matches_by_date)
-
-        champions = Champion.objects.all()
-        champions_dict = {champ.name: champ for champ in champions}
-
-        datetime_from_db = datetime(2024, 4, 30, 0, 0, 0)  # Example datetime value
-
-        matches_ids = predicted_matches.values_list('id', flat=True)
-        bets_for_matches = {}
-        for match_id in matches_ids:
-            bets_for_matches[match_id] = Bet.objects.filter(match_id=match_id)
-
-        context['datetime_from_db'] = datetime_from_db.strftime("%Y-%m-%dT%H:%M:%S")
-        context['user_pending_matches'] = pending_matches
-        context['user_predicted_matches'] = predicted_matches
-        context['bets_for_matches'] = bets_for_matches
-        context['users'] = sorted_users
-        context['champions'] = champions_dict
-        context['form'] = MatchForm()
+        context["finished_matches"] = [build_match_context(match) for match in finished_matches]
+        context["upcoming_matches"] = [build_match_context(match) for match in upcoming_matches]
+        context['user_bets'] = bets_dict
 
         return context
 

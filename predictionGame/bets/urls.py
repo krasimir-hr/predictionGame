@@ -3,4 +3,5 @@ import views
 
 urlpatterns = [
     path('wildcards/', views.WildcardsView.as_view(), name='wildcards'),
+
 ]

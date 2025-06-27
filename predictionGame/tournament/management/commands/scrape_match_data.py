@@ -147,6 +147,7 @@ class Command(BaseCommand):
                             team_1_side_selection = data['team_1']['side_selection']
                             team_2_side_selection = data['team_2']['side_selection']
                             length = data['length']
+                            result = data['result']
 
                             matchh, created = Game.objects.get_or_create(
                                 game_id=game_id,
@@ -158,6 +159,7 @@ class Command(BaseCommand):
                                     'team_1_bans_json': team_1_bans_json,
                                     'team_2_bans_json': team_2_bans_json,
                                     'length': length,
+                                    'result': result,
                                     'team_1_side_selection': team_1_side_selection,
                                     'team_2_side_selection': team_2_side_selection,
                                     'match': curr_match,
@@ -171,6 +173,12 @@ class Command(BaseCommand):
                             idx += 1
                     
                     match.finished_data = True
+                    team1_score = final_data['team_1_score']
+                    team2_score = final_data['team_2_score']
+
+                    print(team1_score, team2_score)
+                    match.team1_score = team1_score
+                    match.team2_score = team2_score
                     match.save()
 
 

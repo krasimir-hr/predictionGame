@@ -27,7 +27,31 @@ class MatchDetailView(DetailView):
 
          players_by_game = {}
 
+         game_stats = []
+
          for game in match.games.all().order_by("game_number"):
+            team_1_stat_json = game.team_1_team_stats_json
+            team_2_stat_json = game.team_2_team_stats_json
+
+            game_stats.append({
+                'game_number': game.game_number,
+                'team_1': {
+                    'kda': team_1_stat_json['kda'],
+                    'gold': team_1_stat_json['gold'],
+                    'barons': team_1_stat_json['barons'],
+                    'towers': team_1_stat_json['towers'],
+                    'dragons': team_1_stat_json['dragons'],
+                    'inhibitors': team_1_stat_json['inhibitors'],
+                },
+                'team_2': {
+                    'kda': team_2_stat_json['kda'],
+                    'gold': team_2_stat_json['gold'],
+                    'barons': team_2_stat_json['barons'],
+                    'towers': team_2_stat_json['towers'],
+                    'dragons': team_2_stat_json['dragons'],
+                    'inhibitors': team_2_stat_json['inhibitors'],
+                },
+            })
             game_players = []
             for team_json in [game.team_1_players_stats_json, game.team_2_players_stats_json]:
                   if not team_json:
@@ -113,6 +137,8 @@ class MatchDetailView(DetailView):
                          player["kda_deaths"] = "N/A"
                          player["kda_assists"] = "N/A"
                          player["kda_ratio"] = "N/A"
+
+                    
                         
 
                      player["player_stats"] = stats_list
@@ -122,16 +148,21 @@ class MatchDetailView(DetailView):
                      player["champion_icon"] = champ_icon
                      player["team"] = "Team 1" if team_json == game.team_1_players_stats_json else "Team 2"
                      game_players.append(player)
+                
+                
 
             for i, player_obj in enumerate(game_players):
                 player_obj['role_icon'] = role_icons[i % len(role_icons)]
 
+            
             team1_players = game_players[:5]
             team2_players = game_players[5:]
                
             players_by_game[game.game_number] = {
                 "team1": team1_players,
                 "team2": team2_players,
+                "team_1_stats": game_stats[-1]["team_1"],
+                "team_2_stats": game_stats[-1]["team_2"],
             }
 
          context["players_by_game"] = players_by_game

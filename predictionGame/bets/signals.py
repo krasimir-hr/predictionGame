@@ -20,7 +20,7 @@ def calc_points_and_gather_wins_and_results(sender, instance, **kwargs):
                 user = bet.user
                 profile = user.profile
 
-                match_type = match.match_type
+                match_type = 'BO5'
                 match_team1_score = match.team1_score
                 match_team2_score = match.team2_score
                 bet_team1_score = bet.team1_score

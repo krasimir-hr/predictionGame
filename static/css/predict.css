@@ -1,0 +1,167 @@
+.predicts-container {
+   gap: 20px;
+}
+
+.match-card.predict {
+   width: 450px;
+}
+
+.predict-wrapper {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+   padding: 20px;
+}
+
+.p-info {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   width: 80%;
+}
+
+.p-team-info {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.p-team-info p {
+   margin: 10px 0;
+   font-weight: 600;
+   font-size: 19px;
+}
+
+.p-team-info img {
+   height: 50px;
+}
+
+.predict-slogan {
+   display: flex;
+   align-items: center;
+   gap: 30px;
+}
+
+.predict-options {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 5px;
+}
+
+.predict-options--teams,.predict-options--score {
+   display: flex;
+   gap: 10px;
+}
+
+.predict-btn {
+   background-color: #2b2b3a;
+   border: 1px solid transparent;
+   transition: border-color 0.2s ease;
+   padding: 5px 0;
+}
+
+.predict-btn:hover {
+   background-color: #0c0c11;
+}
+
+.predict-btn.selected {
+   background-color: #0c0c11;
+   border-color:rgba(255, 255, 255, 0.158);
+}
+
+.predict-btn.not-selected {
+   background-color: rgba(49, 49, 51, 0.295);
+   color: rgba(214, 214, 214, 0.295);
+}
+
+.predict-btn.predict-team {
+   width: 150px;
+}
+
+.predict-btn.locked {
+   pointer-events: none;
+   cursor: default;
+}
+
+.predict-btn.predict-score {
+   width: 70px;
+}
+
+.predict-btn.predict-team, .predict-btn.predict-score {
+   text-align: center;
+   font-size: 14px;
+   font-weight: 800;
+   border-radius: 6px;
+   cursor: pointer;
+}
+
+.predict-slogan-text { 
+   font-weight: 600;
+   font-size: 14px;
+}
+
+.predict-status {
+   font-size: 11px;
+   display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+   gap: 5px;
+   border-radius: 8px;
+   border: 1px solid rgba(255, 255, 255, 0.158);
+   padding: 5px 8px 5px 10px;
+   width: 70px;
+}
+
+.predict-status.hidden {
+   display: none;
+}
+
+.material-symbols-outlined.check,
+.material-symbols-outlined.bolt {
+   font-size: 15px;
+}
+
+.bolt {
+   color: #ddec4f;
+}
+
+.check {
+   color: #418c60;
+}
+
+.p-match-info {
+   text-align: center;
+   font-weight: 600;
+}
+
+.p-date {
+   font-size: 13px;
+   color:#b3b3b3
+}
+
+.p-time {
+   font-size: 19px;
+}
+
+.p-bo {
+   font-size: 16px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 2px solid rgba(156, 156, 156, 0.2);
+  border-top-color: #b9b9b9;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

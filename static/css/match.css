@@ -1,5 +1,5 @@
 .team-logo {
-   height: 3em;
+   width: 3em;
    object-fit: cover;
 }
 
@@ -8,18 +8,20 @@
    background-color: rgba(26, 26, 32, 0.9);
    border-radius: 8px;
    border: 1px solid rgba(255, 255, 255, 0.1);
-   width: 70%;
+   min-height: 103px;
+   margin-bottom: 10px;
 }
-   
+
 .match-wrapper {
    display: flex;
    justify-content: space-around;
    align-items: center;
-   padding: 5px 10px;
+   padding: 5px 10px 0 10px;
 }
 
 .teams-group {
    display: flex;
+   justify-content: center;
    align-items: center;
    width: 100%;
    flex-grow: 1;
@@ -31,39 +33,42 @@
    display: flex;
    align-items: center;
    gap: 10px;
-   display: flex;
-   align-items: center;
-   gap: 8px;
-   flex-grow: 1;
-   flex-basis: 0;
+   width: 150px;
 }
 
 .team-header p {
-    margin: 0;
-    font-size: 1.1em;
-    color: #f0f0f0;
-    white-space: nowrap;
-    overflow: hidden; 
-    text-overflow: ellipsis;
+   margin: 0;
+   font-size: 1.1em;
+   color: #f0f0f0;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 
 .team-header:first-child {
-    justify-content: flex-end;
+   justify-content: flex-end;
 }
 
 .team-header:last-child {
-    justify-content: flex-start;
+   justify-content: flex-start;
 }
 
 .score {
-   letter-spacing: 5px;
-   align-items: center; 
+   align-items: center;
    justify-content: center;
-   font-size: 2.2em; 
-   font-weight: bold;
+   font-size: 1.4em;
    color: #ffffff;
    padding: 0 5px;
-   flex-shrink: 0;
+   width: 120px;
+   display: flex;
+   justify-content: space-evenly;
+   text-align: center;
+}
+
+.score span {
+   display: flex;
+   justify-content: center;
+   width: 50px;
 }
 
 ul {
@@ -74,11 +79,12 @@ ul {
    list-style-type: none;
 }
 
-.bets, .match-wrapper > .time {
+.bets,
+.match-wrapper > .time {
    width: 200px;
    flex-shrink: 0;
    flex-grow: 0;
-   flex-basis: 200px,
+   flex-basis: 200px;
 }
 
 .time {
@@ -97,19 +103,20 @@ ul {
 .time--hour {
    font-size: 2.5em;
    font-weight: 500;
+   margin-left: 5px;
 }
 
-
-.time--minutes, .time--meridiem {
-    font-size: 1em; 
-    vertical-align: super;
-    line-height: 1;
-    position: relative; 
-    top: -0.6em; 
+.time--minutes,
+.time--meridiem {
+   font-size: 1em;
+   vertical-align: super;
+   line-height: 1;
+   position: relative;
+   top: -0.6em;
 }
 
 .image-icon {
-  filter: brightness(0) invert(1); /* Turns black to white */
+   filter: brightness(0) invert(1);
 }
 
 .game-icon {
@@ -122,22 +129,23 @@ ul {
 }
 
 .score-container {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
+   display: flex;
+   gap: 15px;
+   flex-wrap: wrap;
+   justify-content: center;
+   margin-bottom: 10px;
 }
 
 .score-card {
-   background-color: #2b2b3a; /* Darker background for each card */
+   background-color: #2b2b3a;
    border-radius: 8px;
-   padding: 7px 5px;
+   padding: 7px 5px 10px 5px;
    text-align: center;
-   color: #f0f0f0; /* Light text color */
+   color: #f0f0f0;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
    display: flex;
    flex-direction: column;
-   justify-content: space-between; /* Pushes progress bar to the bottom */
+   justify-content: space-between;
    position: relative;
    overflow: hidden;
    cursor: pointer;
@@ -155,36 +163,30 @@ ul {
    bottom: 0;
    left: 0;
    width: 100%;
-   height: 5px; 
-   background-color: #444;
+   height: 3px;
+   background-color: var(--after-bg);
    border-bottom-left-radius: 8px;
    border-bottom-right-radius: 8px;
    transition: background-color 0.3s ease;
 }
 
-.score-card:hover::after {
-   background-color: #fded05;
-   
+.score-card:hover,
+.score-card.active {
+   background-color: #0c0c11;
 }
 
 .score-card--time {
-    font-size: 1.1em;
-    color: #b0b0b0; /* Slightly lighter color for time */
-    display: flex;
-    justify-content: center;
+   font-size: 1.1em;
+   color: #b0b0b0;
+   display: flex;
+   justify-content: center;
 }
 
 .score-card--match-info {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-.score {
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #ffffff;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 5px;
 }
 
 .team_logo.small {
@@ -206,7 +208,7 @@ ul {
 
 .spells {
    display: grid;
-   grid-template-columns: repeat(1, fr);;
+   grid-template-columns: repeat(1, fr);
 }
 
 .runes {
@@ -248,11 +250,11 @@ ul {
 
 .slash {
    font-size: 16px;
-   color: #5a5a5a
+   color: #5a5a5a;
 }
 
 .deaths {
-   color: #F7665E;
+   color: #f7665e;
 }
 
 .kda-ratio {
@@ -260,26 +262,53 @@ ul {
 }
 
 .role {
-   height: 30px;
-   filter: brightness(0.7)
+   height: 25px;
+   filter: brightness(0.7);
 }
 
 .champion {
    height: 45px;
+   border-radius: 20px;
+}
+
+.player-wrapper {
+   width: 150px;
+   display: flex;
+   flex-direction: column;
+}
+
+.player-wrapper.team2 {
+   align-items: end;
 }
 
 .stat-bar {
-   width: 150px;
-   background-color: rgba(0, 153, 255, 0.8);
-   text-align: end;
-   font-size: 10px;
-   padding: 3px;
-   font-weight: 600;
+   display: none;
 }
 
-.stat-bar.team2 {
+.stat-bar.active {
+   display: block;
+}
+
+.player-wrapper .stat-bar {
+   width: 100%;
+   background-color: var(--blue-team-color);
+   text-align: end;
+   font-size: 11px;
+   padding: 1px 4px;
+   font-weight: 600;
+   border-radius: 4px;
+}
+
+.stat-bar.red {
+   background-color: var(--red-team-color);
+}
+
+.stat-bar.blue {
+   background-color: var(--blue-team-color);
+}
+
+.player-wrapper.team2 .stat-bar {
    text-align: left;
-   background-color: rgba(226, 54, 112, 0.8);
 }
 
 .team-stats {
@@ -302,4 +331,185 @@ ul {
 
 .player--name.team2 {
    text-align: end;
+}
+
+.versus {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+}
+
+.stat-diff {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.rounded-line {
+   width: 25px;
+   height: 5px;
+   border-radius: 8px;
+   margin: 1px auto;
+}
+
+.rounded-line.red {
+   background-color: var(--red-team-color);
+}
+
+.rounded-line.blue {
+   background-color: var(--blue-team-color);
+}
+
+.arrow.hidden {
+   visibility: hidden;
+}
+
+.arrow.red {
+   color: var(--red-team-color);
+}
+
+.arrow.blue {
+   color: var(--blue-team-color);
+}
+
+.game-stats {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 5px 20px;
+}
+
+.team-global-stats {
+   display: flex;
+   gap: 20px;
+}
+
+.stat-wrap {
+   background-color: red;
+   padding: 5px 10px;
+   border-radius: 5px;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   font-size: 16px;
+   font-weight: 600;
+   height: 25px;
+   width: 40px;
+}
+
+.stat-wrap > .game-icon {
+   height: 18px;
+   width: 18px;
+   font-size: 18px;
+}
+
+.stat-wrap.gold {
+   width: 70px;
+}
+
+.barons {
+   background-color: #4d62e5;
+   box-shadow: 0 0 8px 3px rgba(222, 211, 235, 0.2);
+}
+
+.drakes {
+   background-color: #587d71;
+   box-shadow: 0 0 8px 3px rgba(212, 236, 212, 0.2);
+}
+
+.inhibs {
+   background-color: #3f7cac;
+   box-shadow: 0 0 8px 3px rgba(44, 156, 221, 0.2);
+}
+
+.towers {
+   background-color: #618b25;
+   box-shadow: 0 0 8px 3px rgba(212, 236, 212, 0.2);
+}
+
+.gold {
+   background-color: #a89048;
+   box-shadow: 0 0 8px 3px rgba(244, 226, 177, 0.2);
+}
+
+.player-stats-btns {
+   display: flex;
+   align-items: center;
+   gap: 15px;
+   justify-content: center;
+   cursor: pointer;
+}
+
+.dmg-btn,
+.gold-btn,
+.cs-btn {
+   background-color: #252530;
+   padding: 10px;
+   height: 25px;
+   width: 25px;
+   border-radius: 8px;
+   transition: background-color 0.2s ease-in-out;
+}
+
+.dmg-btn:hover,
+.gold-btn:hover,
+.cs-btn:hover {
+   background-color: #393949;
+}
+
+.dmg-btn.active,
+.gold-btn.active,
+.cs-btn.active {
+   background-color: #39394e;
+   border: 1px solid green;
+}
+
+.dmg-btn .game-icon {
+   color: #7b51df;
+}
+
+.gold-btn {
+   padding: 12px 10px 8px 10px;
+}
+
+.gold-btn .game-icon {
+   color: #dab751;
+}
+
+.cs-btn img {
+   height: 25px;
+   width: 25px;
+   filter: invert(100%) sepia(100%) saturate(1800%) hue-rotate(-70deg);
+}
+
+.game-details-wrapper {
+   display: none;
+}
+
+.game-details-wrapper.active {
+   display: block;
+}
+
+.stat-diff-value {
+   width: 40px;
+   text-align: center;
+}
+
+.expand-btn-wrapper {
+   display: flex;
+   justify-content: center;
+   cursor: pointer;
+}
+
+.expand-btn {
+   text-align: center;
+   width: 30px;
+}
+
+.expandable-div {
+   display: none;
+}
+
+.expandable-div.expanded {
+   display: block;
 }

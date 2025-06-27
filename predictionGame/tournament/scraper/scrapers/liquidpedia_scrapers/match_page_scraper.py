@@ -151,7 +151,6 @@ class MatchPageScraper:
 
       bans = self.extract_bans(soup)
       lengths = self.extract_games_length(soup)
-
       return {
          'player_names': player_names, 
          'player_champions': player_champions,

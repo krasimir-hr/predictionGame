@@ -86,6 +86,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'predictionGame.context_processors.global_context',
+                'predictionGame.context_processors.upcoming_matches',
             ],
         },
     },

@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}"/>
     <script src="https://kit.fontawesome.com/2c665bbf8a.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=schedule,swords" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_left,arrow_right,block,bolt,check,keyboard_arrow_down,question_mark,schedule,swords" />
 
 </head>
 
@@ -50,31 +50,90 @@
                 </ul>
             </div>
         {% endif %}
-    </nav>
-</header>
+        </nav>
+    </header>
+    <div class="content-wrapper">
+        <aside class="upcoming-matches">
+            {% if upcoming_matches%}
+            <h1 class="header-title">Upcoming matches</h1>
+            <div class="predicts-container">
+            {% for match_ctx in upcoming_matches %}
+            <div class="match-card predict" data-predict-id="{{ match_ctx.match.match_id }}" data-match-date="{{ match_ctx.match.match_timedate }}">
+                <div class="predict-wrapper">
+                    <div class="p-info">
+                        <div class="p-team-info">
+                            <img src="{{ match_ctx.match.team_1.logo }}" alt="" />
+                            <p>{{ match_ctx.match.team_1.name }}</p>
+                        </div>
+                        <div class="p-match-info">
+                            <div class="p-date">{{ match_ctx.match.match_timedate|date:"m/d" }}</div>
+                            <div class="p-time">{{ match_ctx.match.match_timedate|time:"h:i A" }}</div>
+                            <div class="p-bo">BO5</div>
+                        </div>
+                        <div class="p-team-info">
+                            <img src="{{ match_ctx.match.team_2.logo }}" alt="" />
+                            <p>{{ match_ctx.match.team_2.name }}</p>
+                        </div>
+                    </div>
+                    <div class="predict-slogan">
+                        <p class="predict-slogan-text">WHO WILL WIN?</p>
+                        <p class="predict-status">Vote now!
+                        <span class="material-symbols-outlined bolt">bolt</span>
+                        </p>
+                        <p class="predict-status hidden">Saving...
+                        <span class="spinner"></span>
+                        </p>
+                        <p class="predict-status hidden">Voted!
+                        <span class="material-symbols-outlined check">check</span>
+                        </p>
+                        <p class="predict-status hidden">Locked
+                        <span class="material-symbols-outlined block">block</span>
+                        </p>
+                    </div>
+                    <div class="predict-options">
+                        <div class="predict-options--teams">
+                            <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_1.color }}">{{ match_ctx.match.team_1.name }}</div>
+                            <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_2.color }}">{{ match_ctx.match.team_2.name }}</div>
+                        </div>
+                        <div class="predict-options--score">
+                            <div class="predict-btn predict-score">3-0</div>
+                            <div class="predict-btn predict-score">3-1</div>
+                            <div class="predict-btn predict-score">3-2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+            {% endif %}
+        </aside>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
 
-<main>
-    {% block content %}
-    {% endblock %}
-</main>
 
-<footer>
-    <div class="footer-wrap">
-        <div class="personal-information">
-            <p>Created by Krasimir Hristov</p>
-            <div class="socials">
-                <a href="https://github.com/krasimir-hr">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="https://twitter.com/very_hardstuck">
-                    <i class="fa-brands fa-x-twitter"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/krasimir-hristov-7613a7279/">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                </a>
+    <footer>
+        <div class="footer-wrap">
+            <div class="personal-information">
+                <p>Created by Krasimir Hristov</p>
+                <div class="socials">
+                    <a href="https://github.com/krasimir-hr">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://twitter.com/very_hardstuck">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/krasimir-hristov-7613a7279/">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
+    <script src="{% static 'scripts/predicts.js' %}"></script>
+    {{ user_bets|json_script:"userBetsData" }}
+    <script> const userBets = JSON.parse(document.getElementById('userBetsData').textContent);</script>
 </body>
 </html>

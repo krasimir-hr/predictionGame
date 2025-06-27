@@ -32,4 +32,8 @@ def index(list_obj, i):
         return list_obj[i]
     except IndexError:
         return None
+    
+@register.filter
+def times(number):
+    return range(number)
 
