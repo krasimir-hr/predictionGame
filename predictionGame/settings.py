@@ -182,7 +182,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
-# CSRF_TRUSTED_ORIGINS = ['https://www.chronicled.krasye.com', 'https://chronicled.krasye.com']
 
 # ENABLE_ORYX_BUILD = True
 
@@ -192,3 +191,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
