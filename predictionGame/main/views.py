@@ -27,7 +27,10 @@ class HomePageView(TemplateView):
         finished_matches = Match.objects.filter(finished=True).order_by("-match_timedate")
         upcoming_matches = Match.objects.filter(finished=False).order_by("match_timedate")
 
-        user_bets = Bet.objects.filter(user=self.request.user).select_related('match')
+        if self.request.user.is_authenticated:
+            user_bets = Bet.objects.filter(user=self.request.user).select_related('match')
+        else:
+            user_bets = None
 
         bets_dict = {
             bet.match.match_id: {
