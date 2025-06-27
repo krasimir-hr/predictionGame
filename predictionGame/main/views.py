@@ -29,20 +29,20 @@ class HomePageView(TemplateView):
 
         if self.request.user.is_authenticated:
             user_bets = Bet.objects.filter(user=self.request.user).select_related('match')
+            bets_dict = {
+                bet.match.match_id: {
+                    'team1_score': bet.team1_score,
+                    'team2_score': bet.team2_score,
+                }
+                for bet in user_bets
+            }
+            context['user_bets'] = bets_dict
         else:
             user_bets = None
 
-        bets_dict = {
-            bet.match.match_id: {
-                'team1_score': bet.team1_score,
-                'team2_score': bet.team2_score,
-            }
-            for bet in user_bets
-        }
 
         context["finished_matches"] = [build_match_context(match) for match in finished_matches]
         context["upcoming_matches"] = [build_match_context(match) for match in upcoming_matches]
-        context['user_bets'] = bets_dict
 
         return context
 
