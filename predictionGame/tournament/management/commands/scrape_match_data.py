@@ -23,7 +23,6 @@ class Command(BaseCommand):
         tournament_scraper = TournamentPageScraper(base_url)
         soup = tournament_scraper.fetch_page()
         match_urls = tournament_scraper.extract_match_urls(soup)
-        test_urls = ['leagueoflegends/Match:ID_LCK25Sp2W1_0010']
 
         if not match_urls:
             self.stdout.write(self.style.ERROR("No match URLs found."))
@@ -33,7 +32,7 @@ class Command(BaseCommand):
 
         final_data = None
 
-        for relative_url in test_urls:
+        for relative_url in match_urls:
             full_url = relative_url
             self.stdout.write(f"\nProcessing match URL: {full_url}")
             try:
