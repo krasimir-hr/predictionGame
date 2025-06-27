@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}"/>
     <script src="https://kit.fontawesome.com/2c665bbf8a.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_left,arrow_right,block,bolt,check,keyboard_arrow_down,question_mark,schedule,swords" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_left,arrow_right,ballot,block,bolt,check,group,keyboard_arrow_down,preview,question_mark,schedule,swords" />
 
 </head>
 
@@ -46,7 +46,6 @@
                         <li><a href="{% url 'admin:index' %}">Admin panel</a></li>
                         <li><a href="{% url 'create_match' %}">Add a match</a></li>
                     {% endif %} 
-
                 </ul>
             </div>
         {% endif %}
@@ -89,6 +88,20 @@
                         <p class="predict-status hidden">Locked
                         <span class="material-symbols-outlined block">block</span>
                         </p>
+                        <div class="all-bets"> 
+                            <div class="show-bets-btn"><span class="material-symbols-outlined">ballot</span></div>
+                            <ul class="bets-container hidden">
+                                {% for bet in match_ctx.bets %}
+                                <li>
+                                    <p class="bet-user">{{ bet.user.username }}</p> 
+                                    <div class="bet-teams-container">
+                                        <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt=""> {{ bet.team1_score }}-{{ bet.team2_score }}
+                                        <img class="bets-img"src="{{ match_ctx.match.team_2.logo }}" alt="">
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                     </div>
                     <div class="predict-options">
                         <div class="predict-options--teams">

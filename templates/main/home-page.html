@@ -25,13 +25,30 @@
             <p>{{ match_ctx.match.team_2.name }}</p>
          </div>
       </div>
-      <ul class="bets">
-         {% for bet in match_ctx.bets %}
-         <li>{{ bet.user.username }} — Prediction: {{ bet.team1_score }} - {{ bet.team2_score }}</li>
-         {% empty %}
-         <li>No bets submitted yet.</li>
-         {% endfor %}
-      </ul>
+         <div class="all-bets bets"> 
+            <p class="game-type">BO5</p>
+            <div class="show-bets-btn finished"><span class="material-symbols-outlined">ballot</span></div>
+            <ul class="bets-container hidden">
+               {% for bet in match_ctx.bets %}
+               <li>
+                  <p class="bet-user">{{ bet.user.username }}</p> 
+                  <div class="bet-teams-container">
+                        <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt=""> {{ bet.team1_score }}-{{ bet.team2_score }}
+                        <img class="bets-img"src="{{ match_ctx.match.team_2.logo }}" alt="">
+                  </div>
+                  <div class="bet-pts">
+                     {% if bet.bet_points == 2 %}
+                     <p class="plus-two">+ {{ bet.bet_points }}</p>
+                     {% elif bet.bet_points == 3 %}
+                     <p class="plus-three">+ {{ bet.bet_points }}</p>
+                     {% else %}
+                     <p class="plus-zero">+ {{ bet.bet_points }}</p>
+                     {% endif %}
+                  </div>
+               </li>
+               {% endfor %}
+            </ul>
+         </div>
    </div>
    <div class="expand-btn-wrapper">
       <span class="material-symbols-outlined expand-btn" data-expand-id="{{ match_ctx.match.match_id  }}"

@@ -97,7 +97,14 @@ class Champion(models.Model):
     name = models.CharField(max_length=255)
     key = models.CharField(max_length=10, unique=True)
     icon = models.URLField(null=True, blank=True)
-    description = models.TextField(blank=True, null=True) 
+    description = models.TextField(blank=True, null=True)
+
+    top_picks = models.IntegerField(default=0)
+    jgl_picks = models.IntegerField(default=0)
+    mid_picks = models.IntegerField(default=0)
+    bot_picks = models.IntegerField(default=0)
+    sup_picks = models.IntegerField(default=0)
+    bans = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.name}'

@@ -227,29 +227,51 @@ scoreCardBtns.forEach(btn => {
 })
 
 document.addEventListener("DOMContentLoaded", () => {
-    let game_result = [0, 0]
-    scoreCardBtns.forEach(btn => {
-        const result = btn.dataset.result;
-        const resultSpan = btn.querySelector('.score')
+    
 
-        const colors = []
-        const imgElements = btn.querySelectorAll('.team_logo')
-        imgElements.forEach(img => {
-            colors.push(img.dataset.color)
+    const matchCards = document.querySelectorAll('.match-card')
+    matchCards.forEach(game => {
+        const allBetsWrapper = game.querySelector('.all-bets')
+        const showBetsBtn = allBetsWrapper.querySelector('.show-bets-btn')
+        const betsContainer = allBetsWrapper.querySelector('.bets-container');
+
+        showBetsBtn.addEventListener('mouseenter', () => {
+            betsContainer.classList.remove('hidden');
         })
-        
-        if (result == 'W–L') {
-            game_result[0] += 1
-            btn.style.setProperty('--after-bg', colors[0])
-        } else {
-            game_result[1] += 1
-            btn.style.setProperty('--after-bg', colors[1])
-        }
 
-        resultSpan.textContent = `${game_result[0]} - ${game_result[1]}`
+        showBetsBtn.addEventListener('mouseleave', () => {
+            betsContainer.classList.add('hidden');
+        })
 
-        scoreCardBtns[0].click()
+        let game_result = [0, 0]
+        const matchScoreCardBtns = game.querySelectorAll('.score-card')
+        matchScoreCardBtns.forEach(btn => {
+            const result = btn.dataset.result;
+            const resultSpan = btn.querySelector('.score')
+
+
+
+            const colors = []
+            const imgElements = btn.querySelectorAll('.team_logo')
+            imgElements.forEach(img => {
+                colors.push(img.dataset.color)
+            })
+            
+            if (result == 'W–L') {
+                game_result[0] += 1
+                btn.style.setProperty('--after-bg', colors[0])
+            } else {
+                game_result[1] += 1
+                btn.style.setProperty('--after-bg', colors[1])
+            }
+
+            resultSpan.textContent = `${game_result[0]} - ${game_result[1]}`
+
+            scoreCardBtns[0].click()
+        })
     })
+
+    
 })
 
 

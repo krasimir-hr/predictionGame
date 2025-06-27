@@ -123,6 +123,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const matchId = card.dataset.predictId;
       const matchDate = card.dataset.matchDate;
 
+      const allBetsWrapper = card.querySelector('.all-bets')
+      const showBetsBtn = allBetsWrapper.querySelector('.show-bets-btn')
+      const betsContainer = allBetsWrapper.querySelector('.bets-container');
+
+      showBetsBtn.addEventListener('mouseenter', () => {
+         betsContainer.classList.remove('hidden');
+      })
+
+      showBetsBtn.addEventListener('mouseleave', () => {
+         betsContainer.classList.add('hidden');
+      })
+
       const lockTime = parseCustomDate(matchDate);
       const now = new Date();
 

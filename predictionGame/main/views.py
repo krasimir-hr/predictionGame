@@ -40,7 +40,6 @@ class HomePageView(TemplateView):
         else:
             user_bets = None
 
-
         context["finished_matches"] = [build_match_context(match) for match in finished_matches]
         context["upcoming_matches"] = [build_match_context(match) for match in upcoming_matches]
 

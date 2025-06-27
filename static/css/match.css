@@ -513,3 +513,28 @@ ul {
 .expandable-div.expanded {
    display: block;
 }
+
+.game-type {
+   margin: 0;
+   font-size: 25px;
+   font-weight: 500;
+}
+
+.bets {
+   display: flex;
+   justify-content: right;
+   gap: 30px;
+   align-items: center;
+}
+
+.plus-two {
+   color: #31963f;
+}
+
+.plus-three {
+   color: #36ce4a;
+}
+
+.plus-zero {
+   color: #cc9144;
+}
