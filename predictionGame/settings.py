@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'predictionGame.users',
 
     'fontawesomefree',
+    "django_browser_reload",
 ]
 
 SOCIALACCOUNT_PROVIDERS = {

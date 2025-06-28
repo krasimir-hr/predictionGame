@@ -7,8 +7,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
 import json
 import traceback
+from collections import defaultdict
 
 from .models import Wildcards
 from predictionGame.tournament.models import Champion, Player, Team, Match
@@ -119,19 +121,59 @@ class WildcardsView(TemplateView):
         kills_picks = sorted(kills_picks, key=lambda x: (x["player"].total_kills or 0), reverse=True)
         assists_picks = sorted(assists_picks, key=lambda x: (x["player"].total_assists or 0), reverse=True)
         deaths_picks = sorted(deaths_picks, key=lambda x: (x["player"].total_deaths or 0), reverse=True)
+    
+        def group_picks_by_champ(picks, key_field='champ', key_attr='name'):
+            grouped = defaultdict(lambda: {'users': [], 'object': None})
+            for pick in picks:
+                obj = pick[key_field]
+                if obj:
+                    key = getattr(obj, key_attr)
+                    grouped[key]['users'].append(pick['user'])
+                    grouped[key]['object'] = obj
+            return grouped
+
+        top_picks_grouped = group_picks_by_champ(top_picks)
+        top_picks_grouped = dict(top_picks_grouped)
+
+        jgl_picks_grouped = group_picks_by_champ(jgl_picks)
+        jgl_picks_grouped = dict(jgl_picks_grouped)
+        
+        mid_picks_grouped = group_picks_by_champ(mid_picks)
+        mid_picks_grouped = dict(mid_picks_grouped)
+
+        bot_picks_grouped = group_picks_by_champ(bot_picks)
+        bot_picks_grouped = dict(bot_picks_grouped)
+
+        sup_picks_grouped = group_picks_by_champ(sup_picks)
+        sup_picks_grouped = dict(sup_picks_grouped)
+
+        ban_picks_grouped = group_picks_by_champ(ban_picks)
+        ban_picks_grouped = dict(ban_picks_grouped)
+
+        kills_picks_grouped = group_picks_by_champ(kills_picks, key_field='player', key_attr='name')
+        kills_picks_grouped = dict(kills_picks_grouped)
+
+        assists_picks_grouped = group_picks_by_champ(assists_picks, key_field='player', key_attr='name')
+        assists_picks_grouped = dict(assists_picks_grouped)
+        
+        deaths_picks_grouped = group_picks_by_champ(deaths_picks, key_field='player', key_attr='name')
+        deaths_picks_grouped = dict(deaths_picks_grouped)
+
+        winner_picks_grouped = group_picks_by_champ(winner_picks, key_field='team', key_attr='name')
+        winner_picks_grouped = dict(winner_picks_grouped)
 
 
         wc_picks_context = {
-            "top_picks": top_picks,
-            "jgl_picks": jgl_picks,
-            "mid_picks": mid_picks,
-            "bot_picks": bot_picks,
-            "sup_picks": sup_picks,
-            "ban_picks": ban_picks,
-            "kills_picks": kills_picks,
-            "assists_picks": assists_picks,
-            "deaths_picks": deaths_picks,
-            "winner_picks": winner_picks,
+            "top_picks": top_picks_grouped,
+            "jgl_picks": jgl_picks_grouped,
+            "mid_picks": mid_picks_grouped,
+            "bot_picks": bot_picks_grouped,
+            "sup_picks": sup_picks_grouped,
+            "ban_picks": ban_picks_grouped,
+            "kills_picks": kills_picks_grouped,
+            "assists_picks": assists_picks_grouped,
+            "deaths_picks": deaths_picks_grouped,
+            "winner_picks": winner_picks_grouped,
         }
 
         context['wc_picks'] = wc_picks_context

@@ -1,126 +1,258 @@
 .wildcard-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 15px;
 }
 
 .wildcards {
-    width: 60vw;
+   width: 60vw;
 }
 
 .match-card.wildcard {
-    height: 350px;
-    width: 300px;
-    padding: 25px !important;
-    flex: 0 0 calc((100% / 3) - (15px * 2 / 3));
-    box-sizing: border-box;
-    padding: 10px; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+   height: 350px;
+   width: 300px;
+   padding: 25px !important;
+   flex: 0 0 calc((100% / 3) - (15px * 2 / 3));
+   box-sizing: border-box;
+   padding: 10px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
 }
 
 .wildcard-title {
-    font-size: 20px;
-    text-align: center;
-    margin: 0;
+   font-size: 20px;
+   text-align: center;
+   margin: 0;
 }
 
 .wildcard-pick {
-    width: 100%;
-    position: relative;
+   width: 100%;
+   position: relative;
 }
 
 .wildcard-pick-image {
-    display: flex;
-    justify-content: center;
+   display: flex;
+   justify-content: center;
 }
 
 .wildcard-pick-image span {
-    font-size: 100px;
-    border: 10px solid #fff;
-    border-radius: 50%;
+   font-size: 100px;
+   border: 10px solid #fff;
+   border-radius: 50%;
 }
 
 .wildcard-pick-image img {
-    height: 128px;
+   height: 128px;
 }
 
 .wildcard-pick input {
-    width: 100%;
-    background-color: #21212b;
-    border:1px solid rgba(255, 255, 255, 0.13);
-    border-radius: 5px;
-    color: #fff;
-    box-sizing: border-box;
-    font-size: 15px;
-    padding: 5px;
+   width: 100%;
+   background-color: #21212b;
+   border: 1px solid rgba(255, 255, 255, 0.13);
+   border-radius: 5px;
+   color: #fff;
+   box-sizing: border-box;
+   font-size: 15px;
+   padding: 5px;
 }
 
 input:focus {
-  outline: none;
-  box-shadow: none;
+   outline: none;
+   box-shadow: none;
 }
 
 .wildcard-dropdown-list {
-    width: 100%;
-    max-height: 200px;
-    background-color: #0e0e13;
-    overflow-y: auto;
-    border:1px solid rgba(255, 255, 255, 0.13); 
-    box-sizing: border-box;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 10px;
+   width: 100%;
+   max-height: 200px;
+   background-color: #0e0e13;
+   overflow-y: auto;
+   border: 1px solid rgba(255, 255, 255, 0.13);
+   box-sizing: border-box;
+   position: absolute;
+   top: 100%;
+   left: 0;
+   right: 0;
+   z-index: 1000;
+   padding: 10px;
 }
 
 .wildcard-dropdown-list::-webkit-scrollbar {
-    width: 8px;
+   width: 8px;
 }
 
 .wildcard-dropdown-list::-webkit-scrollbar-track {
-    background-color: #0e0e13;
-    border-radius: 4px;
+   background-color: #0e0e13;
+   border-radius: 4px;
 }
 
 .wildcard-dropdown-list::-webkit-scrollbar-thumb {
-    background-color: #444452;
-    border-radius: 4px;
+   background-color: #444452;
+   border-radius: 4px;
 }
 
 .your-scrollable-field::-webkit-scrollbar-thumb:hover {
-  background: #757575;
+   background: #757575;
 }
 
 .wildcard-dropdown-list.hidden {
-    display: none;
+   display: none;
 }
 
 .dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   padding: 10px;
+   border-radius: 5px;
+   cursor: pointer;
 }
 
 .dropdown-item:hover {
-    background-color: #2e2e3b;
+   background-color: #2e2e3b;
 }
 
 .dropdown-item img {
-    width: 25px;
+   width: 25px;
 }
 
 .predict-status.wc {
-    margin: 0 !important;
+   margin: 0 !important;
 }
 
 .wildcard-result {
-    width: 450px;
+   height: 400px;
+   padding: 0 20px;
+}
+
+.header-container {
+   display: flex;
+   align-items: center;
+   border-bottom: 1px solid rgba(255, 255, 255, 0.164);
+   justify-content: center;
+}
+
+.header-img {
+   width: 30px !important;
+   height: 30px !important;
+   filter: brightness(0) invert(1)
+}
+
+.header-icon {
+    font-size: 30px !important;
+}
+
+.text-container {
+   display: flex;
+   gap: 2px;
+   align-items: center;
+}
+
+.wc-list-header {
+   text-transform: uppercase;
+   font-size: 17px;
+   color: #9c9c9c;
+}
+
+.wc-list-header.bold {
+   font-weight: 700;
+   font-size: 17px;
+   color: #ffffff;
+}
+
+.box {
+   width: 30px;
+   height: 30px;
+   background-color: #494c50;
+   font-size: 20px;
+   font-weight: 700;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 5px;
+   margin-right: 10px;
+}
+
+.box.gold-wc {
+   background-color: #a49054;
+}
+
+.box.silver-wc {
+   background-color: #96989a;
+}
+
+.box.bronze-wc {
+   background-color: #625221;
+}
+
+.pick {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.pick-img img {
+   height: 40px;
+   margin-top: 5px;
+}
+
+.pick-info {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.pick-name {
+   font-size: 20px;
+   font-weight: 600;
+   letter-spacing: 0.8px;
+   text-transform: uppercase;
+}
+
+.picks {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   padding: 20px 10px;
+}
+
+.picks-number {
+   font-size: 20px;
+   font-weight: 600;
+}
+
+.pick-users {
+    color: #9c9c9c;
+}
+
+.wildcard-picks {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 450px);
+    grid-gap: 20px
+}
+
+.last {
+    grid-column: span 3;
+}
+
+.pick-data {
+    height: 62px;
+    padding: 3px 0
+}
+
+.wc-team-logo {
+    height: 200px !important;
+}
+
+.wc-team-picks {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 350px
+}
+
+.wc-team-pick {
+    text-align: center;
 }

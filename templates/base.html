@@ -1,82 +1,84 @@
-{% load static %}
-{% load socialaccount %}
+{% load static %} {% load socialaccount %} {% load django_browser_reload %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MSI 2024 Prediction Game</title>
+   <head>
+      <meta charset="UTF-8" />
+      <meta
+         name="viewport"
+         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+      />
+      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <title>MSI 2024 Prediction Game</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}"/>
-    <script src="https://kit.fontawesome.com/2c665bbf8a.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}"/>
+      <script src="https://kit.fontawesome.com/2c665bbf8a.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_left,arrow_right,ballot,block,bolt,check,group,keyboard_arrow_down,preview,question_mark,schedule,swords" />
+      <link
+         rel="stylesheet"
+         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_left,arrow_right,ballot,block,bolt,check,close,crown,dangerous,group,keyboard_arrow_down,preview,question_mark,schedule,skull,swords,unpublished"
+      />
+   </head>
 
-</head>
-
-<body>
-<header>
-    <nav>
-        <div class="navbar--logo-user">
-            <div class="logo-wrapper">
-                <a href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt="MSI logo"></a>
+   <body>
+      <header>
+         <nav>
+            <div class="navbar--logo-user">
+               <div class="logo-wrapper">
+                  <a href="{% url 'home' %}"
+                     ><img class="logo" src="{% static 'images/logo.png' %}" alt="MSI logo"
+                  /></a>
+               </div>
+               <div class="user-wrapper">
+                  {% if user.is_authenticated %}
+                  <a href="{% url 'profile-details' logged_in_user.id %}">
+                     <p class="user-name">{{ logged_in_user.profile.show_username }}</p>
+                     {% if logged_in_user.profile.profile_picture %}
+                     <img class="user-avatar" src="{{ logged_in_user.profile.profile_picture }}" alt="user-avatar" />
+                     {% endif %}
+                  </a>
+                  {% endif %}
+               </div>
             </div>
-            <div class="user-wrapper">
-
-                {% if user.is_authenticated %}
-                    <a href="{% url 'profile-details' logged_in_user.id %}">
-                        <p class="user-name">{{ logged_in_user.profile.show_username }}</p>
-                        {% if logged_in_user.profile.profile_picture %}
-                            <img class="user-avatar" src="{{ logged_in_user.profile.profile_picture }}"
-                                 alt="user-avatar">
-                        {% endif %}
-                    </a>
-                {% endif %}
-            </div>
-        </div>
-        {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
             <div class="navbar--buttons">
-                <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'wildcards' %}">Wildcards</a></li>
-                    {% if user.is_superuser %}
-                        <li><a href="{% url 'admin:index' %}">Admin panel</a></li>
-                        <li><a href="{% url 'create_match' %}">Add a match</a></li>
-                    {% endif %} 
-                </ul>
+               <ul>
+                  <li><a href="{% url 'home' %}">Home</a></li>
+                  <li><a href="{% url 'wildcards' %}">Wildcards</a></li>
+                  {% if user.is_superuser %}
+                  <li><a href="{% url 'admin:index' %}">Admin panel</a></li>
+                  <li><a href="{% url 'create_match' %}">Add a match</a></li>
+                  {% endif %}
+               </ul>
             </div>
-        {% endif %}
-        </nav>
-</header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+            {% endif %}
+         </nav>
+      </header>
+      <main>{% block content %} {% endblock %}</main>
 
-
-    <footer>
-        <div class="footer-wrap">
+      <footer>
+         <div class="footer-wrap">
             <div class="personal-information">
-                <p>Created by Krasimir Hristov</p>
-                <div class="socials">
-                    <a href="https://github.com/krasimir-hr">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                    <a href="https://twitter.com/very_hardstuck">
-                        <i class="fa-brands fa-x-twitter"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/krasimir-hristov-7613a7279/">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </a>
-                </div>
+               <p>Created by Krasimir Hristov</p>
+               <div class="socials">
+                  <a href="https://github.com/krasimir-hr">
+                     <i class="fa-brands fa-github"></i>
+                  </a>
+                  <a href="https://twitter.com/very_hardstuck">
+                     <i class="fa-brands fa-x-twitter"></i>
+                  </a>
+                  <a href="https://www.linkedin.com/in/krasimir-hristov-7613a7279/">
+                     <i class="fa-brands fa-linkedin-in"></i>
+                  </a>
+               </div>
             </div>
-        </div>
-    </footer>
-    <script src="{% static 'scripts/predicts.js' %}"></script>
-    {{ user_bets|json_script:"userBetsData" }}
-    <script> const userBets = JSON.parse(document.getElementById('userBetsData').textContent);</script>
-</body>
+         </div>
+      </footer>
+      <script src="{% static 'scripts/predicts.js' %}"></script>
+      {{ user_bets|json_script:"userBetsData" }}
+      {% django_browser_reload_script %}
+      <script>
+         const userBets = JSON.parse(document.getElementById('userBetsData').textContent);
+      </script>
+   </body>
 </html>

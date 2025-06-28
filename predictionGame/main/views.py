@@ -10,19 +10,19 @@ from django.db.models import ExpressionWrapper, F, IntegerField
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 
+
 from predictionGame.bets.models import Bet
 from predictionGame.tournament.models import Match, Champion, Player
 from predictionGame.tournament.forms import MatchForm
 from predictionGame.bets.forms import BetForm
-
+from predictionGame.tournament.utils import build_match_context
+from django.contrib.auth import logout
 
 class HomePageView(TemplateView):
     template_name = 'main/home-page.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        from predictionGame.tournament.utils import build_match_context
 
         finished_matches = Match.objects.filter(finished=True).order_by("-match_timedate")
         upcoming_matches = Match.objects.filter(finished=False).order_by("match_timedate")
@@ -63,6 +63,9 @@ class HomePageView(TemplateView):
                 match.users_who_submitted.add(request.user)
         return HttpResponseRedirect('/')
 
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 class CreateMatchView(CreateView):
     model = Match
