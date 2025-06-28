@@ -63,7 +63,78 @@ class WildcardsView(TemplateView):
         else:
             context['user_wildcards'] = {}
 
+        wildcards_picks = Wildcards.objects.select_related('user', 
+                                                     'most_picked_top', 
+                                                     'most_picked_jgl', 
+                                                     'most_picked_mid', 
+                                                     'most_picked_bot', 
+                                                     'most_picked_sup',
+                                                     'most_banned_champion',
+                                                     'player_with_most_kills',
+                                                     'player_with_most_assists',
+                                                     'player_with_most_deaths',
+                                                     'tournament_winner',
+                                                     )
+        
+        top_picks = []
+        jgl_picks = []
+        mid_picks = []
+        bot_picks = []
+        sup_picks = []
+        ban_picks = []
+        kills_picks = []
+        assists_picks = []
+        deaths_picks = []
+        winner_picks = []
 
+        for wc in wildcards_picks:
+            if wc.most_picked_top:
+                top_picks.append({"user": wc.user, "champ": wc.most_picked_top})
+            if wc.most_picked_jgl:
+                jgl_picks.append({"user": wc.user, "champ": wc.most_picked_jgl})
+            if wc.most_picked_mid:
+                mid_picks.append({"user": wc.user, "champ": wc.most_picked_mid})
+            if wc.most_picked_bot:
+                bot_picks.append({"user": wc.user, "champ": wc.most_picked_bot})
+            if wc.most_picked_sup:
+                sup_picks.append({"user": wc.user, "champ": wc.most_picked_sup})
+            if wc.most_banned_champion:
+                ban_picks.append({"user": wc.user, "champ": wc.most_banned_champion})
+            if wc.player_with_most_kills:
+                kills_picks.append({"user": wc.user, "player": wc.player_with_most_kills})
+            if wc.player_with_most_assists:
+                assists_picks.append({"user": wc.user, "player": wc.player_with_most_assists})
+            if wc.player_with_most_deaths:
+                deaths_picks.append({"user": wc.user, "player": wc.player_with_most_deaths})
+            if wc.tournament_winner:
+                winner_picks.append({"user": wc.user, "team": wc.tournament_winner})
+
+        top_picks = sorted(top_picks, key=lambda x: x["champ"].top_picks, reverse=True)
+        jgl_picks = sorted(jgl_picks, key=lambda x: x["champ"].jgl_picks, reverse=True)
+        mid_picks = sorted(mid_picks, key=lambda x: x["champ"].mid_picks, reverse=True)
+        bot_picks = sorted(bot_picks, key=lambda x: x["champ"].bot_picks, reverse=True)
+        sup_picks = sorted(sup_picks, key=lambda x: x["champ"].sup_picks, reverse=True)
+        ban_picks = sorted(ban_picks, key=lambda x: x["champ"].bans, reverse=True)
+
+        kills_picks = sorted(kills_picks, key=lambda x: (x["player"].total_kills or 0), reverse=True)
+        assists_picks = sorted(assists_picks, key=lambda x: (x["player"].total_assists or 0), reverse=True)
+        deaths_picks = sorted(deaths_picks, key=lambda x: (x["player"].total_deaths or 0), reverse=True)
+
+
+        wc_picks_context = {
+            "top_picks": top_picks,
+            "jgl_picks": jgl_picks,
+            "mid_picks": mid_picks,
+            "bot_picks": bot_picks,
+            "sup_picks": sup_picks,
+            "ban_picks": ban_picks,
+            "kills_picks": kills_picks,
+            "assists_picks": assists_picks,
+            "deaths_picks": deaths_picks,
+            "winner_picks": winner_picks,
+        }
+
+        context['wc_picks'] = wc_picks_context
         context['champions'] = Champion.objects.all()
         context['players'] = Player.objects.all()
         context['teams'] = Team.objects.all()

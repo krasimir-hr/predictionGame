@@ -50,81 +50,11 @@
             </div>
         {% endif %}
         </nav>
-    </header>
-    <div class="content-wrapper">
-        <aside class="upcoming-matches">
-            {% if upcoming_matches%}
-            <h1 class="header-title">Upcoming matches</h1>
-            <div class="predicts-container">
-            {% for match_ctx in upcoming_matches %}
-            <div class="match-card predict" data-predict-id="{{ match_ctx.match.match_id }}" data-match-date="{{ match_ctx.match.match_timedate }}">
-                <div class="predict-wrapper">
-                    <div class="p-info">
-                        <div class="p-team-info">
-                            <img src="{{ match_ctx.match.team_1.logo }}" alt="" />
-                            <p>{{ match_ctx.match.team_1.name }}</p>
-                        </div>
-                        <div class="p-match-info">
-                            <div class="p-date">{{ match_ctx.match.match_timedate|date:"m/d" }}</div>
-                            <div class="p-time">{{ match_ctx.match.match_timedate|time:"h:i A" }}</div>
-                            <div class="p-bo">BO5</div>
-                        </div>
-                        <div class="p-team-info">
-                            <img src="{{ match_ctx.match.team_2.logo }}" alt="" />
-                            <p>{{ match_ctx.match.team_2.name }}</p>
-                        </div>
-                    </div>
-                    <div class="predict-slogan">
-                        <p class="predict-slogan-text">WHO WILL WIN?</p>
-                        <p class="predict-status">Vote now!
-                        <span class="material-symbols-outlined bolt">bolt</span>
-                        </p>
-                        <p class="predict-status hidden">Saving...
-                        <span class="spinner"></span>
-                        </p>
-                        <p class="predict-status hidden">Voted!
-                        <span class="material-symbols-outlined check">check</span>
-                        </p>
-                        <p class="predict-status hidden">Locked
-                        <span class="material-symbols-outlined block">block</span>
-                        </p>
-                        <div class="all-bets"> 
-                            <div class="show-bets-btn"><span class="material-symbols-outlined">ballot</span></div>
-                            <ul class="bets-container hidden">
-                                {% for bet in match_ctx.bets %}
-                                <li>
-                                    <p class="bet-user">{{ bet.user.username }}</p> 
-                                    <div class="bet-teams-container">
-                                        <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt=""> {{ bet.team1_score }}-{{ bet.team2_score }}
-                                        <img class="bets-img"src="{{ match_ctx.match.team_2.logo }}" alt="">
-                                    </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="predict-options">
-                        <div class="predict-options--teams">
-                            <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_1.color }}">{{ match_ctx.match.team_1.name }}</div>
-                            <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_2.color }}">{{ match_ctx.match.team_2.name }}</div>
-                        </div>
-                        <div class="predict-options--score">
-                            <div class="predict-btn predict-score">3-0</div>
-                            <div class="predict-btn predict-score">3-1</div>
-                            <div class="predict-btn predict-score">3-2</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            </div>
-            {% endif %}
-        </aside>
-        <main>
-            {% block content %}
-            {% endblock %}
-        </main>
-    </div>
+</header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 
 
     <footer>

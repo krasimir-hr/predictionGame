@@ -1,291 +1,359 @@
 {% extends 'base.html' %} {% load static %} {% load custom_filters %} {% load socialaccount %} {% block content %} 
 {% if user.is_authenticated %} 
-<h1 class="header-title">Finished matches</h1>
-{% if finished_matches %}
-
-{% endif %} {% for match_ctx in finished_matches %}
-<div class="match-card" data-card-id="{{ match_ctx.match.match_id }}">
-   <div class="match-wrapper">
-      <div class="time">
-         <span class="material-symbols-outlined">schedule</span>
-         <div class="time--hour">{{ match_ctx.match.match_timedate|time:"H" }}</div>
-         <div class="time--minutes">00</div>
-         <div class="time--meridiem">{{ match_ctx.match.match_timedate|time:"A" }}</div>
-      </div>
-      <div class="teams-group">
-         <div class="team-header">
-            <p>{{ match_ctx.match.team_1.name }}</p>
-            <img class="team-logo" src="{{ match_ctx.match.team_1.logo }}" alt="" />
-         </div>
-         <div class="score">
-            <span>{{ match_ctx.match.team1_score }}</span><span>-</span><span>{{ match_ctx.match.team2_score }}</span>
-         </div>
-         <div class="team-header">
-            <img class="team-logo" src="{{ match_ctx.match.team_2.logo }}" alt="" />
-            <p>{{ match_ctx.match.team_2.name }}</p>
-         </div>
-      </div>
-         <div class="all-bets bets"> 
-            <p class="game-type">BO5</p>
-            <div class="show-bets-btn finished"><span class="material-symbols-outlined">ballot</span></div>
-            <ul class="bets-container hidden">
-               {% for bet in match_ctx.bets %}
-               <li>
-                  <p class="bet-user">{{ bet.user.username }}</p> 
-                  <div class="bet-teams-container">
-                        <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt=""> {{ bet.team1_score }}-{{ bet.team2_score }}
-                        <img class="bets-img"src="{{ match_ctx.match.team_2.logo }}" alt="">
-                  </div>
-                  <div class="bet-pts">
-                     {% if bet.bet_points == 2 %}
-                     <p class="plus-two">+ {{ bet.bet_points }}</p>
-                     {% elif bet.bet_points == 3 %}
-                     <p class="plus-three">+ {{ bet.bet_points }}</p>
-                     {% else %}
-                     <p class="plus-zero">+ {{ bet.bet_points }}</p>
-                     {% endif %}
-                  </div>
-               </li>
-               {% endfor %}
-            </ul>
-         </div>
-   </div>
-   <div class="expand-btn-wrapper">
-      <span class="material-symbols-outlined expand-btn" data-expand-id="{{ match_ctx.match.match_id  }}"
-         >keyboard_arrow_down</span
-      >
-   </div>
-   <div class="expandable-div">
-      <div class="score-container">
-         {% for game in match_ctx.match.games.all %}
-         <div class="score-card" id="{{ game.game_id }}-btn" data-result="{{ game.result }}">
-            <div class="score-card--time">{{ game.length }}</div>
-            <div class="score-card--match-info">
-               <img
-                  src="{{ match_ctx.match.team_1.logo }}"
-                  alt=""
-                  class="team_logo small"
-                  data-color="{{ match_ctx.match.team_1.color }}"
-               />
-               <span class="score">0 - 1</span>
-               <img
-                  src="{{ match_ctx.match.team_2.logo }}"
-                  alt=""
-                  class="team_logo small"
-                  data-color="{{ match_ctx.match.team_2.color }}"
-               />
+<aside class="upcoming-matches">
+            {% if upcoming_matches%}
+            <h1 class="header-title">Upcoming matches</h1>
+            <div class="predicts-container">
+            {% for match_ctx in upcoming_matches %}
+            <div class="match-card predict" data-predict-id="{{ match_ctx.match.match_id }}" data-match-date="{{ match_ctx.match.match_timedate }}">
+                <div class="predict-wrapper">
+                    <div class="p-info">
+                        <div class="p-team-info">
+                            <img src="{{ match_ctx.match.team_1.logo }}" alt="" />
+                            <p>{{ match_ctx.match.team_1.name }}</p>
+                        </div>
+                        <div class="p-match-info">
+                            <div class="p-date">{{ match_ctx.match.match_timedate|date:"m/d" }}</div>
+                            <div class="p-time">{{ match_ctx.match.match_timedate|time:"h:i A" }}</div>
+                            <div class="p-bo">BO5</div>
+                        </div>
+                        <div class="p-team-info">
+                            <img src="{{ match_ctx.match.team_2.logo }}" alt="" />
+                            <p>{{ match_ctx.match.team_2.name }}</p>
+                        </div>
+                    </div>
+                    <div class="predict-slogan">
+                        <p class="predict-slogan-text">WHO WILL WIN?</p>
+                        <p class="predict-status">Vote now!
+                        <span class="material-symbols-outlined bolt">bolt</span>
+                        </p>
+                        <p class="predict-status hidden">Saving...
+                        <span class="spinner"></span>
+                        </p>
+                        <p class="predict-status hidden">Voted!
+                        <span class="material-symbols-outlined check">check</span>
+                        </p>
+                        <p class="predict-status hidden">Locked
+                        <span class="material-symbols-outlined block">block</span>
+                        </p>
+                        <div class="all-bets"> 
+                            <div class="show-bets-btn"><span class="material-symbols-outlined">ballot</span></div>
+                            <ul class="bets-container hidden">
+                                {% for bet in match_ctx.bets %}
+                                <li>
+                                    <p class="bet-user">{{ bet.user.username }}</p> 
+                                    <div class="bet-teams-container">
+                                        <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt=""> {{ bet.team1_score }}-{{ bet.team2_score }}
+                                        <img class="bets-img"src="{{ match_ctx.match.team_2.logo }}" alt="">
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="predict-options">
+                        <div class="predict-options--teams">
+                            <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_1.color }}">{{ match_ctx.match.team_1.name }}</div>
+                            <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_2.color }}">{{ match_ctx.match.team_2.name }}</div>
+                        </div>
+                        <div class="predict-options--score">
+                            <div class="predict-btn predict-score">3-0</div>
+                            <div class="predict-btn predict-score">3-1</div>
+                            <div class="predict-btn predict-score">3-2</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="progress-bar red"></div>
+            {% endfor %}
+            </div>
+            {% endif %}
+</aside>
+<div class="finished-matches">
+   <h1 class="header-title">Finished matches</h1>
+   {% for match_ctx in finished_matches %}
+   <div class="match-card" data-card-id="{{ match_ctx.match.match_id }}">
+      <div class="match-wrapper">
+         <div class="time">
+            <span class="material-symbols-outlined">schedule</span>
+            <div class="time--hour">{{ match_ctx.match.match_timedate|time:"H" }}</div>
+            <div class="time--minutes">00</div>
+            <div class="time--meridiem">{{ match_ctx.match.match_timedate|time:"A" }}</div>
          </div>
-         {% endfor %}
+         <div class="teams-group">
+            <div class="team-header">
+               <p>{{ match_ctx.match.team_1.name }}</p>
+               <img class="team-logo" src="{{ match_ctx.match.team_1.logo }}" alt="" />
+            </div>
+            <div class="score">
+               <span>{{ match_ctx.match.team1_score }}</span><span>-</span><span>{{ match_ctx.match.team2_score }}</span>
+            </div>
+            <div class="team-header">
+               <img class="team-logo" src="{{ match_ctx.match.team_2.logo }}" alt="" />
+               <p>{{ match_ctx.match.team_2.name }}</p>
+            </div>
+         </div>
+            <div class="all-bets bets"> 
+               <p class="game-type">BO5</p>
+               <div class="show-bets-btn finished"><span class="material-symbols-outlined">ballot</span></div>
+               <ul class="bets-container hidden finished">
+                  {% for bet in match_ctx.bets %}
+                  <li>
+                     <p class="bet-user">{{ bet.user.username }}</p> 
+                     <div class="bet-teams-container">
+                           <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt=""> {{ bet.team1_score }}-{{ bet.team2_score }}
+                           <img class="bets-img"src="{{ match_ctx.match.team_2.logo }}" alt="">
+                     </div>
+                     <div class="bet-pts">
+                        {% if bet.bet_points == 2 %}
+                        <p class="plus-two">+ {{ bet.bet_points }}</p>
+                        {% elif bet.bet_points == 3 %}
+                        <p class="plus-three">+ {{ bet.bet_points }}</p>
+                        {% else %}
+                        <p class="plus-zero">+ {{ bet.bet_points }}</p>
+                        {% endif %}
+                     </div>
+                  </li>
+                  {% endfor %}
+               </ul>
+            </div>
       </div>
-      <div class="games-details">
-         {% for game_number, game_data in match_ctx.players_by_game.items %}
-         <div
-            class="game-details-wrapper"
-            id="{{ match_ctx.match.match_id }}-game{{ game_number }}"
-            data-team1-side="{{ game_data.team_1_side}}"
+      <div class="expand-btn-wrapper">
+         <span class="material-symbols-outlined expand-btn" data-expand-id="{{ match_ctx.match.match_id  }}"
+            >keyboard_arrow_down</span
          >
-            <div class="game-stats">
-               <div class="team-global-stats">
-                  <span class="drakes stat-wrap">
-                     <img
-                        src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png"
-                        alt=""
-                        class="image-icon dragon game-icon"
-                     />
-                     {{ game_data.team_1_stats.dragons }}
-                  </span>
-                  <span class="barons stat-wrap">
-                     <img
-                        src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png"
-                        alt=""
-                        class="image-icon baron game-icon"
-                     />
-                     {{ game_data.team_1_stats.barons }}
-                  </span>
-                  <span class="inhibs stat-wrap">
-                     <img
-                        src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png"
-                        alt=""
-                        class="image-icon inhib game-icon"
-                     />
-                     {{ game_data.team_1_stats.inhibitors }}
-                  </span>
-                  <span class="towers stat-wrap">
-                     <img
-                        src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png"
-                        alt=""
-                        class="image-icon tower game-icon"
-                     />
-                     {{ game_data.team_1_stats.towers }}
-                  </span>
-                  <span class="gold stat-wrap">
-                     <i class="fa-solid fa-coins gold-icon game-icon"></i>
-                     {{ game_data.team_1_stats.gold}}
-                  </span>
+      </div>
+      <div class="expandable-div">
+         <div class="score-container">
+            {% for game in match_ctx.match.games.all %}
+            <div class="score-card" id="{{ game.game_id }}-btn" data-result="{{ game.result }}">
+               <div class="score-card--time">{{ game.length }}</div>
+               <div class="score-card--match-info">
+                  <img
+                     src="{{ match_ctx.match.team_1.logo }}"
+                     alt=""
+                     class="team_logo small"
+                     data-color="{{ match_ctx.match.team_1.color }}"
+                  />
+                  <span class="score">0 - 1</span>
+                  <img
+                     src="{{ match_ctx.match.team_2.logo }}"
+                     alt=""
+                     class="team_logo small"
+                     data-color="{{ match_ctx.match.team_2.color }}"
+                  />
                </div>
-               <div class="player-stats-btns">
-                  <span class="dmg-btn stat-btn">
-                     <span class="material-symbols-outlined kda-stats game-icon">swords</span>
-                  </span>
-                  <span class="gold-btn stat-btn">
-                     <i class="fa-solid fa-coins gold-icon game-icon"></i>
-                  </span>
-                  <span class="cs-btn stat-btn">
-                     <img
-                        src="https://liquipedia.net/commons/images/thumb/f/f4/Lol_stat_icon_cs.png/20px-Lol_stat_icon_cs.png"
-                        alt=""
-                     />
-                  </span>
-               </div>
-               <div class="team-global-stats">
-                  <span class="gold stat-wrap">
-                     <i class="fa-solid fa-coins gold-icon game-icon"></i>
-                     {{ game_data.team_2_stats.gold}}
-                  </span>
-                  <span class="towers stat-wrap">
-                     <img
-                        src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png"
-                        alt=""
-                        class="image-icon dragon game-icon"
-                     />
-                     {{ game_data.team_2_stats.towers }}
-                  </span>
-                  <span class="inhibs stat-wrap">
-                     <img
-                        src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png"
-                        alt=""
-                        class="image-icon baron game-icon"
-                     />
-                     {{ game_data.team_2_stats.inhibitors }}
-                  </span>
-                  <span class="barons stat-wrap">
-                     <img
-                        src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png"
-                        alt=""
-                        class="image-icon inhib game-icon"
-                     />
-                     {{ game_data.team_2_stats.barons }}
-                  </span>
-                  <span class="drakes stat-wrap">
-                     <img
-                        src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png"
-                        alt=""
-                        class="image-icon tower game-icon"
-                     />
-                     {{ game_data.team_2_stats.dragons }}
-                  </span>
-               </div>
+               <div class="progress-bar red"></div>
             </div>
-            <div class="teams">
-               <div class="team-stats">
-                  {% for player in game_data.team1 %}
-                  <div class="player-stats">
-                     <div class="items">
-                        {% for item in player.item_icons %}
-                        <img class="loadout-icon" src="{{ item.icon }}" alt="" />
-                        {% endfor %}
-                     </div>
-                     <div class="spells">
-                        {% for spell in player.spell_icons %}
-                        <img class="loadout-icon" src="{{ spell.icon }}" alt="" />
-                        {% endfor %}
-                     </div>
-                     <div class="runes">
-                        {% for rune in player.rune_icons %}
-                        <img class="rune-icon" src="{{ rune.icon }}" alt="" />
-                        {% endfor %}
-                     </div>
-                     <div class="kda-wrapper">
-                        <div class="kda">
-                           <span class="stat">{{ player.kda_kills }}</span>
-                           <span class="slash">/</span>
-                           <span class="deaths stat">{{ player.kda_deaths }}</span>
-                           <span class="slash">/</span>
-                           <span class="stat">{{ player.kda_assists }}</span>
-                        </div>
-                        <div class="kda-ratio">{{ player.kda_ratio }} <span>KDA</span></div>
-                     </div>
-                     <div class="role-icon-wrapper">
-                        <img src="{{ player.role_icon }}" alt="" class="role" />
-                     </div>
-                     <div class="champ-icon-wrapper">
-                        <img src="{{ player.champion_icon.icon }}" alt="" class="champion" />
-                     </div>
-                     <div class="player-wrapper team1">
-                        <div class="player--name">{{ match_ctx.match.team_1.name }} {{ player.name }}</div>
-                        <div class="stat-bar dmg-stat">{{ player.dmg }}</div>
-                        <div class="stat-bar gold-stat">{{ player.gold }}</div>
-                        <div class="stat-bar cs-stat">{{ player.cs }}</div>
-                     </div>
-                  </div>
-                  {% endfor %}
-               </div>
-               <div class="versus">
-                  {% for _ in 5|times %}
-                  <div class="stat-diff-wrapper">
-                     <div class="stat-diff">
-                        <span class="material-symbols-outlined arrow left">arrow_left</span>
-                        <span class="stat-diff-value">1.8K</span>
-                        <span class="material-symbols-outlined arrow right">arrow_right</span>
-                     </div>
-                     <div class="rounded-line"></div>
-                  </div>
-                  {% endfor %}
-               </div>
-               <div class="team-stats">
-                  {% for player in game_data.team2 %}
-                  <div class="player-stats">
-                     <div class="player-wrapper team2">
-                        <div class="player--name">{{ match_ctx.match.team_2.name }} {{ player.name }}</div>
-                        <div class="stat-bar dmg-stat">{{ player.dmg }}</div>
-                        <div class="stat-bar gold-stat">{{ player.gold }}</div>
-                        <div class="stat-bar cs-stat">{{ player.cs }}</div>
-                     </div>
-                     <div class="champ-icon-wrapper">
-                        <img src="{{ player.champion_icon.icon }}" alt="" class="champion" />
-                     </div>
-                     <div class="role-icon-wrapper">
-                        <img src="{{ player.role_icon }}" alt="" class="role" />
-                     </div>
-                     <div class="kda-wrapper">
-                        <div class="kda">
-                           <span class="stat">{{ player.kda_kills }}</span>
-                           <span class="slash">/</span>
-                           <span class="deaths stat">{{ player.kda_deaths }}</span>
-                           <span class="slash">/</span>
-                           <span class="stat">{{ player.kda_assists }}</span>
-                        </div>
-                        <div class="kda-ratio">{{ player.kda_ratio }} <span>KDA</span></div>
-                     </div>
-                     <div class="runes">
-                        {% for rune in player.rune_icons %}
-                        <img class="rune-icon" src="{{ rune.icon }}" alt="" />
-                        {% endfor %}
-                     </div>
-                     <div class="spells">
-                        {% for spell in player.spell_icons %}
-                        <img class="loadout-icon" src="{{ spell.icon }}" alt="" />
-                        {% endfor %}
-                     </div>
-                     <div class="items">
-                        {% for item in player.item_icons %}
-                        <img class="loadout-icon" src="{{ item.icon }}" alt="" />
-                        {% endfor %}
-                     </div>
-                  </div>
-                  {% endfor %}
-               </div>
-            </div>
+            {% endfor %}
          </div>
-         {% endfor %}
+         <div class="games-details">
+            {% for game_number, game_data in match_ctx.players_by_game.items %}
+            <div
+               class="game-details-wrapper"
+               id="{{ match_ctx.match.match_id }}-game{{ game_number }}"
+               data-team1-side="{{ game_data.team_1_side}}"
+            >
+               <div class="game-stats">
+                  <div class="team-global-stats">
+                     <span class="drakes stat-wrap">
+                        <img
+                           src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png"
+                           alt=""
+                           class="image-icon dragon game-icon"
+                        />
+                        {{ game_data.team_1_stats.dragons }}
+                     </span>
+                     <span class="barons stat-wrap">
+                        <img
+                           src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png"
+                           alt=""
+                           class="image-icon baron game-icon"
+                        />
+                        {{ game_data.team_1_stats.barons }}
+                     </span>
+                     <span class="inhibs stat-wrap">
+                        <img
+                           src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png"
+                           alt=""
+                           class="image-icon inhib game-icon"
+                        />
+                        {{ game_data.team_1_stats.inhibitors }}
+                     </span>
+                     <span class="towers stat-wrap">
+                        <img
+                           src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png"
+                           alt=""
+                           class="image-icon tower game-icon"
+                        />
+                        {{ game_data.team_1_stats.towers }}
+                     </span>
+                     <span class="gold stat-wrap">
+                        <i class="fa-solid fa-coins gold-icon game-icon"></i>
+                        {{ game_data.team_1_stats.gold}}
+                     </span>
+                  </div>
+                  <div class="player-stats-btns">
+                     <span class="dmg-btn stat-btn">
+                        <span class="material-symbols-outlined kda-stats game-icon">swords</span>
+                     </span>
+                     <span class="gold-btn stat-btn">
+                        <i class="fa-solid fa-coins gold-icon game-icon"></i>
+                     </span>
+                     <span class="cs-btn stat-btn">
+                        <img
+                           src="https://liquipedia.net/commons/images/thumb/f/f4/Lol_stat_icon_cs.png/20px-Lol_stat_icon_cs.png"
+                           alt=""
+                        />
+                     </span>
+                  </div>
+                  <div class="team-global-stats">
+                     <span class="gold stat-wrap">
+                        <i class="fa-solid fa-coins gold-icon game-icon"></i>
+                        {{ game_data.team_2_stats.gold}}
+                     </span>
+                     <span class="towers stat-wrap">
+                        <img
+                           src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png"
+                           alt=""
+                           class="image-icon dragon game-icon"
+                        />
+                        {{ game_data.team_2_stats.towers }}
+                     </span>
+                     <span class="inhibs stat-wrap">
+                        <img
+                           src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png"
+                           alt=""
+                           class="image-icon baron game-icon"
+                        />
+                        {{ game_data.team_2_stats.inhibitors }}
+                     </span>
+                     <span class="barons stat-wrap">
+                        <img
+                           src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png"
+                           alt=""
+                           class="image-icon inhib game-icon"
+                        />
+                        {{ game_data.team_2_stats.barons }}
+                     </span>
+                     <span class="drakes stat-wrap">
+                        <img
+                           src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png"
+                           alt=""
+                           class="image-icon tower game-icon"
+                        />
+                        {{ game_data.team_2_stats.dragons }}
+                     </span>
+                  </div>
+               </div>
+               <div class="teams">
+                  <div class="team-stats">
+                     {% for player in game_data.team1 %}
+                     <div class="player-stats">
+                        <div class="items">
+                           {% for item in player.item_icons %}
+                           <img class="loadout-icon" src="{{ item.icon }}" alt="" />
+                           {% endfor %}
+                        </div>
+                        <div class="spells">
+                           {% for spell in player.spell_icons %}
+                           <img class="loadout-icon" src="{{ spell.icon }}" alt="" />
+                           {% endfor %}
+                        </div>
+                        <div class="runes">
+                           {% for rune in player.rune_icons %}
+                           <img class="rune-icon" src="{{ rune.icon }}" alt="" />
+                           {% endfor %}
+                        </div>
+                        <div class="kda-wrapper">
+                           <div class="kda">
+                              <span class="stat">{{ player.kda_kills }}</span>
+                              <span class="slash">/</span>
+                              <span class="deaths stat">{{ player.kda_deaths }}</span>
+                              <span class="slash">/</span>
+                              <span class="stat">{{ player.kda_assists }}</span>
+                           </div>
+                           <div class="kda-ratio">{{ player.kda_ratio }} <span>KDA</span></div>
+                        </div>
+                        <div class="role-icon-wrapper">
+                           <img src="{{ player.role_icon }}" alt="" class="role" />
+                        </div>
+                        <div class="champ-icon-wrapper">
+                           <img src="{{ player.champion_icon.icon }}" alt="" class="champion" />
+                        </div>
+                        <div class="player-wrapper team1">
+                           <div class="player--name">{{ match_ctx.match.team_1.name }} {{ player.name }}</div>
+                           <div class="stat-bar dmg-stat">{{ player.dmg }}</div>
+                           <div class="stat-bar gold-stat">{{ player.gold }}</div>
+                           <div class="stat-bar cs-stat">{{ player.cs }}</div>
+                        </div>
+                     </div>
+                     {% endfor %}
+                  </div>
+                  <div class="versus">
+                     {% for _ in 5|times %}
+                     <div class="stat-diff-wrapper">
+                        <div class="stat-diff">
+                           <span class="material-symbols-outlined arrow left">arrow_left</span>
+                           <span class="stat-diff-value">1.8K</span>
+                           <span class="material-symbols-outlined arrow right">arrow_right</span>
+                        </div>
+                        <div class="rounded-line"></div>
+                     </div>
+                     {% endfor %}
+                  </div>
+                  <div class="team-stats">
+                     {% for player in game_data.team2 %}
+                     <div class="player-stats">
+                        <div class="player-wrapper team2">
+                           <div class="player--name">{{ match_ctx.match.team_2.name }} {{ player.name }}</div>
+                           <div class="stat-bar dmg-stat">{{ player.dmg }}</div>
+                           <div class="stat-bar gold-stat">{{ player.gold }}</div>
+                           <div class="stat-bar cs-stat">{{ player.cs }}</div>
+                        </div>
+                        <div class="champ-icon-wrapper">
+                           <img src="{{ player.champion_icon.icon }}" alt="" class="champion" />
+                        </div>
+                        <div class="role-icon-wrapper">
+                           <img src="{{ player.role_icon }}" alt="" class="role" />
+                        </div>
+                        <div class="kda-wrapper">
+                           <div class="kda">
+                              <span class="stat">{{ player.kda_kills }}</span>
+                              <span class="slash">/</span>
+                              <span class="deaths stat">{{ player.kda_deaths }}</span>
+                              <span class="slash">/</span>
+                              <span class="stat">{{ player.kda_assists }}</span>
+                           </div>
+                           <div class="kda-ratio">{{ player.kda_ratio }} <span>KDA</span></div>
+                        </div>
+                        <div class="runes">
+                           {% for rune in player.rune_icons %}
+                           <img class="rune-icon" src="{{ rune.icon }}" alt="" />
+                           {% endfor %}
+                        </div>
+                        <div class="spells">
+                           {% for spell in player.spell_icons %}
+                           <img class="loadout-icon" src="{{ spell.icon }}" alt="" />
+                           {% endfor %}
+                        </div>
+                        <div class="items">
+                           {% for item in player.item_icons %}
+                           <img class="loadout-icon" src="{{ item.icon }}" alt="" />
+                           {% endfor %}
+                        </div>
+                     </div>
+                     {% endfor %}
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+         </div>
       </div>
    </div>
+   {% empty %}
+   <p>No finished matches yet.</p>
+   {% endfor %} 
 </div>
-{% empty %}
-<p>No finished matches yet.</p>
-{% endfor %} 
 
 
 <!-- <div class="sidebar">

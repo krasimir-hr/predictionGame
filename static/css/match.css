@@ -1,3 +1,7 @@
+.finished-matches {
+   width: 60vw;
+}
+
 .team-logo {
    width: 3em;
    object-fit: cover;
@@ -5,11 +9,11 @@
 
 .match-card {
    color: #e0e0e0;
-   background-color: rgba(26, 26, 32, 0.9);
+   background-color: rgba(26, 26, 32, 0.5);
    border-radius: 8px;
    border: 1px solid rgba(255, 255, 255, 0.1);
    min-height: 103px;
-   margin-bottom: 10px;
+   margin-bottom: 20px;
 }
 
 .match-wrapper {
@@ -537,4 +541,10 @@ ul {
 
 .plus-zero {
    color: #cc9144;
+}
+
+.bets-container.finished {
+   left: 0;
+   right: 100%;
+   transform: translateY(10%);
 }

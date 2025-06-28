@@ -2,308 +2,334 @@
 {% load static %}
 {% load custom_filters %}
 {% block content %}
+    <div class="wildcard-picks">
+        <h1 class="header-title">Wildcard Picks</h1>
+        <div class="match-card wildcard-result">
+            <h3>
+                Top lane picks
+            </h3>
+            {% for pick in wc_picks.top_picks %}
+            <div class="pick">
+                {% if forloop.counter0 == 0 %}
+                <div class="gold-wc box">1</div>
+                {% elif forloop.counter0 == 1 %}
+                <div class="silver-wc box">2</div>
+                {% elif forloop.counter0 == 2 %}
+                <div class="bronze-wc box">3</div>
+                {% else %}
+                <div class="box">{{ forloop.counter0 }}</div>
+                {% endif %}
+                <div class="pick-name">{{ pick.champ.name }}</div>
+                <div class="pick-img"><img src="{{ pick.champ.icon }}" alt=""></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="wildcards">
+        <h1 class="header-title">Champions</h1>
+        <div class="wildcard-wrapper">
+            <div class="match-card wildcard" data-model="most_picked_top" data-type="champion">
+                <h2 class="wildcard-title">Which champion will be picked the most on top lane?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
+                </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for champ in champions %}
+                        <div class="dropdown-item" data-id="{{ champ.id }}">
+                            <img src="{{ champ.icon }}" alt="{{ champ.name }}">
+                            <span>{{ champ.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
+            </div>
+            <div class="match-card wildcard" data-model="most_picked_jgl" data-type="champion">
+                <h2 class="wildcard-title">Which champion will be picked the most as a jungler?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
+                </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for champ in champions %}
+                        <div class="dropdown-item" data-id="{{ champ.id }}">
+                            <img src="{{ champ.icon }}" alt="{{ champ.name }}">
+                            <span>{{ champ.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
+            </div>
+            <div class="match-card wildcard" data-model="most_picked_mid" data-type="champion">
+                <h2 class="wildcard-title">Which champion will be picked the most on mid lane?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
+                </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for champ in champions %}
+                        <div class="dropdown-item" data-id="{{ champ.id }}">
+                            <img src="{{ champ.icon }}" alt="{{ champ.name }}">
+                            <span>{{ champ.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
+            </div>
+            <div class="match-card wildcard" data-model="most_picked_bot" data-type="champion">
+                <h2 class="wildcard-title">Which champion will be picked the most as adc?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
+                </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for champ in champions %}
+                        <div class="dropdown-item" data-id="{{ champ.id }}">
+                            <img src="{{ champ.icon }}" alt="{{ champ.name }}">
+                            <span>{{ champ.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
+            </div>
+            <div class="match-card wildcard" data-model="most_picked_sup" data-type="champion">
+                <h2 class="wildcard-title">Which champion will be picked the most as support?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
+                </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for champ in champions %}
+                        <div class="dropdown-item" data-id="{{ champ.id }}">
+                            <img src="{{ champ.icon }}" alt="{{ champ.name }}">
+                            <span>{{ champ.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
+            </div>
+            <div class="match-card wildcard" data-model="most_banned_champion" data-type="champion">
+                <h2 class="wildcard-title">Which champion will be the most banned?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
+                </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for champ in champions %}
+                        <div class="dropdown-item" data-id="{{ champ.id }}">
+                            <img src="{{ champ.icon }}" alt="{{ champ.name }}">
+                            <span>{{ champ.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
+            </div>
+        </div>
 
-    <h1 class="header-title">Champions</h1>
-    <div class="wildcard-wrapper">
-        <div class="match-card wildcard" data-model="most_picked_top" data-type="champion">
-            <h2 class="wildcard-title">Which champion will be picked the most on top lane?</h2>
-            <div class="wildcard-pick-image">
-                <span class="material-symbols-outlined">question_mark</span>
-            </div>
-            <div class="wildcard-pick">
-                <input type="text">
-                <div class="wildcard-dropdown-list hidden">
-                    {% for champ in champions %}
-                    <div class="dropdown-item" data-id="{{ champ.id }}">
-                        <img src="{{ champ.icon }}" alt="{{ champ.name }}">
-                        <span>{{ champ.name }}</span>
-                    </div>
-                    {% endfor %}
+        <h1>Players</h1>
+        <div class="wildcard-wrapper">
+            <div class="match-card wildcard" data-model="player_with_most_kills" data-type="player">
+                <h2 class="wildcard-title">Which player will have the most kills?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
                 </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for player in players %}
+                        <div class="dropdown-item">
+                            <img src="{{ player.photo_url }}" alt="{{ player.name }}">
+                            <span>{{ player.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
             </div>
-            <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-            </p>
-            <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-            </p>
-            <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-            </p>
-            <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-            </p>
+            <div class="match-card wildcard" data-model="player_with_most_assists" data-type="player">
+                <h2 class="wildcard-title">Which player will have the most assists?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
+                </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for player in players %}
+                        <div class="dropdown-item">
+                            <img src="{{ player.photo_url }}" alt="{{ player.name }}">
+                            <span>{{ player.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
+            </div>
+            <div class="match-card wildcard" data-model="player_with_most_deaths" data-type="player">
+                <h2 class="wildcard-title">Which player will have the most deaths?</h2>
+                <div class="wildcard-pick-image">
+                    <span class="material-symbols-outlined">question_mark</span>
+                </div>
+                <div class="wildcard-pick">
+                    <input type="text">
+                    <div class="wildcard-dropdown-list hidden">
+                        {% for player in players %}
+                        <div class="dropdown-item">
+                            <img src="{{ player.photo_url }}" alt="{{ player.name }}">
+                            <span>{{ player.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="predict-status wc">Vote now!
+                <span class="material-symbols-outlined bolt">bolt</span>
+                </p>
+                <p class="predict-status wc hidden">Saving...
+                <span class="spinner"></span>
+                </p>
+                <p class="predict-status wc hidden">Voted!
+                <span class="material-symbols-outlined check">check</span>
+                </p>
+                <p class="predict-status wc hidden">Locked
+                <span class="material-symbols-outlined block">block</span>
+                </p>
+            </div>
         </div>
-        <div class="match-card wildcard" data-model="most_picked_jgl" data-type="champion">
-            <h2 class="wildcard-title">Which champion will be picked the most as a jungler?</h2>
+
+        <h1>Teams</h1>
+        <div class="wildcard-wrapper">
+            <div class="match-card wildcard" data-model="tournament_winner" data-type="team">
+            <h2 class="wildcard-title">Which team will win the tournament?</h2>
             <div class="wildcard-pick-image">
                 <span class="material-symbols-outlined">question_mark</span>
             </div>
             <div class="wildcard-pick">
                 <input type="text">
                 <div class="wildcard-dropdown-list hidden">
-                    {% for champ in champions %}
-                    <div class="dropdown-item" data-id="{{ champ.id }}">
-                        <img src="{{ champ.icon }}" alt="{{ champ.name }}">
-                        <span>{{ champ.name }}</span>
+                    {% for team in teams %}
+                    <div class="dropdown-item">
+                        <img src="{{ team.logo }}" alt="{{ team.name }}">
+                        <span>{{ team.name }}</span>
                     </div>
                     {% endfor %}
                 </div>
             </div>
             <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
+                <span class="material-symbols-outlined bolt">bolt</span>
             </p>
             <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
+                <span class="spinner"></span>
             </p>
             <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
+                <span class="material-symbols-outlined check">check</span>
             </p>
             <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
+                <span class="material-symbols-outlined block">block</span>
             </p>
-        </div>
-        <div class="match-card wildcard" data-model="most_picked_mid" data-type="champion">
-            <h2 class="wildcard-title">Which champion will be picked the most on mid lane?</h2>
-            <div class="wildcard-pick-image">
-                <span class="material-symbols-outlined">question_mark</span>
             </div>
-            <div class="wildcard-pick">
-                <input type="text">
-                <div class="wildcard-dropdown-list hidden">
-                    {% for champ in champions %}
-                    <div class="dropdown-item" data-id="{{ champ.id }}">
-                        <img src="{{ champ.icon }}" alt="{{ champ.name }}">
-                        <span>{{ champ.name }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-            </p>
-            <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-            </p>
-            <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-            </p>
-            <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-            </p>
-        </div>
-        <div class="match-card wildcard" data-model="most_picked_bot" data-type="champion">
-            <h2 class="wildcard-title">Which champion will be picked the most as adc?</h2>
-            <div class="wildcard-pick-image">
-                <span class="material-symbols-outlined">question_mark</span>
-            </div>
-            <div class="wildcard-pick">
-                <input type="text">
-                <div class="wildcard-dropdown-list hidden">
-                    {% for champ in champions %}
-                    <div class="dropdown-item" data-id="{{ champ.id }}">
-                        <img src="{{ champ.icon }}" alt="{{ champ.name }}">
-                        <span>{{ champ.name }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-            </p>
-            <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-            </p>
-            <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-            </p>
-            <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-            </p>
-        </div>
-        <div class="match-card wildcard" data-model="most_picked_sup" data-type="champion">
-            <h2 class="wildcard-title">Which champion will be picked the most as support?</h2>
-            <div class="wildcard-pick-image">
-                <span class="material-symbols-outlined">question_mark</span>
-            </div>
-            <div class="wildcard-pick">
-                <input type="text">
-                <div class="wildcard-dropdown-list hidden">
-                    {% for champ in champions %}
-                    <div class="dropdown-item" data-id="{{ champ.id }}">
-                        <img src="{{ champ.icon }}" alt="{{ champ.name }}">
-                        <span>{{ champ.name }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-            </p>
-            <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-            </p>
-            <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-            </p>
-            <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-            </p>
-        </div>
-        <div class="match-card wildcard" data-model="most_banned_champion" data-type="champion">
-            <h2 class="wildcard-title">Which champion will be the most banned?</h2>
-            <div class="wildcard-pick-image">
-                <span class="material-symbols-outlined">question_mark</span>
-            </div>
-            <div class="wildcard-pick">
-                <input type="text">
-                <div class="wildcard-dropdown-list hidden">
-                    {% for champ in champions %}
-                    <div class="dropdown-item" data-id="{{ champ.id }}">
-                        <img src="{{ champ.icon }}" alt="{{ champ.name }}">
-                        <span>{{ champ.name }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-            </p>
-            <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-            </p>
-            <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-            </p>
-            <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-            </p>
         </div>
     </div>
 
-    <h1>Players</h1>
-    <div class="wildcard-wrapper">
-        <div class="match-card wildcard" data-model="player_with_most_kills" data-type="player">
-            <h2 class="wildcard-title">Which player will have the most kills?</h2>
-            <div class="wildcard-pick-image">
-                <span class="material-symbols-outlined">question_mark</span>
-            </div>
-            <div class="wildcard-pick">
-                <input type="text">
-                <div class="wildcard-dropdown-list hidden">
-                    {% for player in players %}
-                    <div class="dropdown-item">
-                        <img src="{{ player.photo_url }}" alt="{{ player.name }}">
-                        <span>{{ player.name }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-            </p>
-            <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-            </p>
-            <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-            </p>
-            <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-            </p>
-        </div>
-        <div class="match-card wildcard" data-model="player_with_most_assists" data-type="player">
-            <h2 class="wildcard-title">Which player will have the most assists?</h2>
-            <div class="wildcard-pick-image">
-                <span class="material-symbols-outlined">question_mark</span>
-            </div>
-            <div class="wildcard-pick">
-                <input type="text">
-                <div class="wildcard-dropdown-list hidden">
-                    {% for player in players %}
-                    <div class="dropdown-item">
-                        <img src="{{ player.photo_url }}" alt="{{ player.name }}">
-                        <span>{{ player.name }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-            </p>
-            <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-            </p>
-            <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-            </p>
-            <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-            </p>
-        </div>
-        <div class="match-card wildcard" data-model="player_with_most_deaths" data-type="player">
-            <h2 class="wildcard-title">Which player will have the most deaths?</h2>
-            <div class="wildcard-pick-image">
-                <span class="material-symbols-outlined">question_mark</span>
-            </div>
-            <div class="wildcard-pick">
-                <input type="text">
-                <div class="wildcard-dropdown-list hidden">
-                    {% for player in players %}
-                    <div class="dropdown-item">
-                        <img src="{{ player.photo_url }}" alt="{{ player.name }}">
-                        <span>{{ player.name }}</span>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-            </p>
-            <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-            </p>
-            <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-            </p>
-            <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-            </p>
-        </div>
-    </div>
-
-    <h1>Teams</h1>
-    <div class="wildcard-wrapper">
-        <div class="match-card wildcard" data-model="tournament_winner" data-type="team">
-        <h2 class="wildcard-title">Which team will win the tournament?</h2>
-        <div class="wildcard-pick-image">
-            <span class="material-symbols-outlined">question_mark</span>
-        </div>
-        <div class="wildcard-pick">
-            <input type="text">
-            <div class="wildcard-dropdown-list hidden">
-                {% for team in teams %}
-                <div class="dropdown-item">
-                    <img src="{{ team.logo }}" alt="{{ team.name }}">
-                    <span>{{ team.name }}</span>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        <p class="predict-status wc">Vote now!
-            <span class="material-symbols-outlined bolt">bolt</span>
-        </p>
-        <p class="predict-status wc hidden">Saving...
-            <span class="spinner"></span>
-        </p>
-        <p class="predict-status wc hidden">Voted!
-            <span class="material-symbols-outlined check">check</span>
-        </p>
-        <p class="predict-status wc hidden">Locked
-               <span class="material-symbols-outlined block">block</span>
-        </p>
-        </div>
-    </div>
     <script src="{% static 'scripts/wildcards.js' %}"></script>
     {{ user_wildcards|json_script:"userWildcardsData" }}
     <script> const userWildcards = JSON.parse(document.getElementById('userWildcardsData').textContent);</script>
