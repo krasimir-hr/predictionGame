@@ -15,7 +15,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('submit-bet/', views.submit_bet, name='submit_bet'),
     path('submit-wildcard/', views.submit_wildcard, name='submit-wildcard'),
-    path("__reload__/", include("django_browser_reload.urls")),
+    # path("__reload__/", include("django_browser_reload.urls")),
     path('logout/', logout_view, name='logout'),
 ]
 
