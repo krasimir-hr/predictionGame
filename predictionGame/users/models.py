@@ -20,10 +20,7 @@ class Profile(models.Model):
     correct_results = models.IntegerField(default=0)
     bonus_points = models.IntegerField(default=0)
     edited_username = models.CharField(max_length=30, default="")
-
-    def total_points(self):
-        total_points = self.correct_wins * 2 + self.correct_results + self.bonus_points
-        return total_points
+    total_points = models.IntegerField(default=0)
 
     def show_username(self):
         if not self.edited_username:

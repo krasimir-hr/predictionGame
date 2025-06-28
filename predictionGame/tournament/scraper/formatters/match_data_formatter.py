@@ -141,11 +141,14 @@ class MatchDataFormatter:
 
 
       stat_keys = ['kda', 'gold', 'towers', 'inhibitors', 'barons', 'dragons']
-      
+      idx = 0
       while raw_team_stats:
          team1_stats = {}
-         team2_stats = {}
+         team2_stats = {}        
          for key in stat_keys:
+            if raw_team_stats[idx + 1] in ['Atakhan', 'Void Grubs', 'Rift Heralds']:
+               for i in range(9):
+                  print(raw_team_stats.pop(0))
             team1_stats[key] = raw_team_stats.pop(0)
             raw_team_stats.pop(0)
             team2_stats[key] = raw_team_stats.pop(0)

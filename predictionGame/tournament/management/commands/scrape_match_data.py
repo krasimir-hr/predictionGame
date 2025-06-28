@@ -45,7 +45,8 @@ class Command(BaseCommand):
                 try:
                     final_data = formatter.structure_final_match_data()
                 except Exception as e:
-                    self.stdout.write(self.style.ERROR("Skipping due to error: {e}"))
+                    self.stdout.write(self.style.ERROR(f"Skipping due to error: {e}"))
+                    self.stdout.write(self.style.ERROR(traceback.format_exc()))
 
                 teams = initial_data.get('teams')
                 if not teams or len(teams) < 2:
