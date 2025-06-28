@@ -192,6 +192,10 @@ input:focus {
    justify-content: space-between;
 }
 
+.pick-img {
+    width: 55px;
+}
+
 .pick-img img {
    height: 40px;
    margin-top: 5px;
