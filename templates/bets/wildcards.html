@@ -161,7 +161,7 @@
                   <div class="pick-name">{{ pick }}</div>
                </div>
                <div class="wc-info">
-                  <div class="picks-number">{{ data.object.adc_picks }}</div>
+                  <div class="picks-number">{{ data.object.bot_picks }}</div>
                </div>
             </div>
             <div class="pick-users">
@@ -264,28 +264,31 @@
       </div>
       <div class="picks">
          {% for pick, data in wc_picks.kills_picks.items %}
-         <div class="pick">
-            <div class="pick-info">
-               {% if forloop.counter0 == 0 %}
-               <div class="gold-wc box">1</div>
-               {% elif forloop.counter0 == 1 %}
-               <div class="silver-wc box">2</div>
-               {% elif forloop.counter0 == 2 %}
-               <div class="bronze-wc box">3</div>
-               {% else %}
-               <div class="box">{{ forloop.counter }}</div>
-               {% endif %}
-               <div class="pick-img">
-                  <img src="{{ data.object.photo_url }}" alt="" />
+         <div class="pick-data">
+            <div class="pick">
+               <div class="pick-info">
+                  {% if forloop.counter0 == 0 %}
+                  <div class="gold-wc box">1</div>
+                  {% elif forloop.counter0 == 1 %}
+                  <div class="silver-wc box">2</div>
+                  {% elif forloop.counter0 == 2 %}
+                  <div class="bronze-wc box">3</div>
+                  {% else %}
+                  <div class="box">{{ forloop.counter }}</div>
+                  {% endif %}
+                  <div class="pick-img">
+                     <img src="{{ data.object.photo_url }}" alt="" />
+                  </div>
+                  <div class="pick-name">{{ pick }}</div>
                </div>
-               <div class="pick-name">{{ pick }}</div>
+               <div class="wc-info">
+                  <div class="picks-number">{{ data.object.total_kills }}</div>
+               </div>
             </div>
-            <div class="wc-info">
-               <div class="picks-number">{{ data.object.total_kills }}</div>
+            <div class="pick-users">
+               Picked by {% for user in data.users %} {{ user.username }}{% if not forloop.last %}, {% endif %}
+               {%endfor%}
             </div>
-         </div>
-         <div class="pick-users">
-            Picked by {% for user in data.users %} {{ user.username }}{% if not forloop.last %}, {% endif %} {%endfor%}
          </div>
          {% endfor %}
       </div>
@@ -304,28 +307,31 @@
       </div>
       <div class="picks">
          {% for pick, data in wc_picks.assists_picks.items %}
-         <div class="pick">
-            <div class="pick-info">
-               {% if forloop.counter0 == 0 %}
-               <div class="gold-wc box">1</div>
-               {% elif forloop.counter0 == 1 %}
-               <div class="silver-wc box">2</div>
-               {% elif forloop.counter0 == 2 %}
-               <div class="bronze-wc box">3</div>
-               {% else %}
-               <div class="box">{{ forloop.counter }}</div>
-               {% endif %}
-               <div class="pick-img">
-                  <img src="{{ data.object.photo_url }}" alt="" />
+         <div class="pick-data">
+            <div class="pick">
+               <div class="pick-info">
+                  {% if forloop.counter0 == 0 %}
+                  <div class="gold-wc box">1</div>
+                  {% elif forloop.counter0 == 1 %}
+                  <div class="silver-wc box">2</div>
+                  {% elif forloop.counter0 == 2 %}
+                  <div class="bronze-wc box">3</div>
+                  {% else %}
+                  <div class="box">{{ forloop.counter }}</div>
+                  {% endif %}
+                  <div class="pick-img">
+                     <img src="{{ data.object.photo_url }}" alt="" />
+                  </div>
+                  <div class="pick-name">{{ pick }}</div>
                </div>
-               <div class="pick-name">{{ pick }}</div>
+               <div class="wc-info">
+                  <div class="picks-number">{{ data.object.total_assists }}</div>
+               </div>
             </div>
-            <div class="wc-info">
-               <div class="picks-number">{{ data.object.total_assists }}</div>
+            <div class="pick-users">
+               Picked by {% for user in data.users %} {{ user.username }}{% if not forloop.last %}, {% endif %}
+               {%endfor%}
             </div>
-         </div>
-         <div class="pick-users">
-            Picked by {% for user in data.users %} {{ user.username }}{% if not forloop.last %}, {% endif %} {%endfor%}
          </div>
          {% endfor %}
       </div>
@@ -340,28 +346,31 @@
       </div>
       <div class="picks">
          {% for pick, data in wc_picks.deaths_picks.items %}
-         <div class="pick">
-            <div class="pick-info">
-               {% if forloop.counter0 == 0 %}
-               <div class="gold-wc box">1</div>
-               {% elif forloop.counter0 == 1 %}
-               <div class="silver-wc box">2</div>
-               {% elif forloop.counter0 == 2 %}
-               <div class="bronze-wc box">3</div>
-               {% else %}
-               <div class="box">{{ forloop.counter }}</div>
-               {% endif %}
-               <div class="pick-img">
-                  <img src="{{ data.object.photo_url }}" alt="" />
+         <div class="pick-data">
+            <div class="pick">
+               <div class="pick-info">
+                  {% if forloop.counter0 == 0 %}
+                  <div class="gold-wc box">1</div>
+                  {% elif forloop.counter0 == 1 %}
+                  <div class="silver-wc box">2</div>
+                  {% elif forloop.counter0 == 2 %}
+                  <div class="bronze-wc box">3</div>
+                  {% else %}
+                  <div class="box">{{ forloop.counter }}</div>
+                  {% endif %}
+                  <div class="pick-img">
+                     <img src="{{ data.object.photo_url }}" alt="" />
+                  </div>
+                  <div class="pick-name">{{ pick }}</div>
                </div>
-               <div class="pick-name">{{ pick }}</div>
+               <div class="wc-info">
+                  <div class="picks-number">{{ data.object.total_deaths }}</div>
+               </div>
             </div>
-            <div class="wc-info">
-               <div class="picks-number">{{ data.object.total_deaths }}</div>
+            <div class="pick-users">
+               Picked by {% for user in data.users %} {{ user.username }}{% if not forloop.last %}, {% endif %}
+               {%endfor%}
             </div>
-         </div>
-         <div class="pick-users">
-            Picked by {% for user in data.users %} {{ user.username }}{% if not forloop.last %}, {% endif %} {%endfor%}
          </div>
          {% endfor %}
       </div>
@@ -375,16 +384,12 @@
          </div>
       </div>
       <div class="wc-team-picks">
-         {% for pick, data in wc_picks.winner_picks.items %}
-            {% for user in data.users %} 
-				<div class="wc-team-pick">
-					
-            	<img class="wc-team-logo" src="{{ data.object.logo }}" alt="" />
-					<p class="wc-team-user">{{ user.username }}</p>
-				</div>
-            {%endfor%} 
-         
-			{% endfor %}
+         {% for pick, data in wc_picks.winner_picks.items %} {% for user in data.users %}
+         <div class="wc-team-pick">
+            <img class="wc-team-logo" src="{{ data.object.logo }}" alt="" />
+            <p class="wc-team-user">{{ user.username }}</p>
+         </div>
+         {%endfor%} {% endfor %}
       </div>
    </div>
 </div>
