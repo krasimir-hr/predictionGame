@@ -359,6 +359,25 @@
     background-color: #f9f9f9;
 }
 
+.standings-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.standings--user {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    width: 70%;
+}
+
+.standing-pts {
+   margin-left: auto;
+}
+
+
 @media (max-width: 800px) {
     .content-wrap {
         flex-direction: column;

@@ -26,6 +26,7 @@ class HomePageView(TemplateView):
 
         finished_matches = Match.objects.filter(finished=True).order_by("-match_timedate")
         upcoming_matches = Match.objects.filter(finished=False).order_by("match_timedate")
+        users_ranked = User.objects.select_related('profile').order_by('-profile__total_points')
 
         if self.request.user.is_authenticated:
             user_bets = Bet.objects.filter(user=self.request.user).select_related('match')
@@ -42,6 +43,7 @@ class HomePageView(TemplateView):
 
         context["finished_matches"] = [build_match_context(match) for match in finished_matches]
         context["upcoming_matches"] = [build_match_context(match) for match in upcoming_matches]
+        context["users_ranked"] = users_ranked
 
         return context
 

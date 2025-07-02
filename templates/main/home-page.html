@@ -1,73 +1,108 @@
-{% extends 'base.html' %} {% load static %} {% load custom_filters %} {% load socialaccount %} {% block content %} 
-{% if user.is_authenticated %} 
-<aside class="upcoming-matches">
-            {% if upcoming_matches%}
-            <h1 class="header-title">Upcoming matches</h1>
-            <div class="predicts-container">
-            {% for match_ctx in upcoming_matches %}
-            <div class="match-card predict" data-predict-id="{{ match_ctx.match.match_id }}" data-match-date="{{ match_ctx.match.match_timedate }}">
-                <div class="predict-wrapper">
-                    <div class="p-info">
-                        <div class="p-team-info">
-                            <img src="{{ match_ctx.match.team_1.logo }}" alt="" />
-                            <p>{{ match_ctx.match.team_1.name }}</p>
-                        </div>
-                        <div class="p-match-info">
-                            <div class="p-date">{{ match_ctx.match.match_timedate|date:"m/d" }}</div>
-                            <div class="p-time">{{ match_ctx.match.match_timedate|time:"h:i A" }}</div>
-                            <div class="p-bo">BO5</div>
-                        </div>
-                        <div class="p-team-info">
-                            <img src="{{ match_ctx.match.team_2.logo }}" alt="" />
-                            <p>{{ match_ctx.match.team_2.name }}</p>
-                        </div>
-                    </div>
-                    <div class="predict-slogan">
-                        <p class="predict-slogan-text">WHO WILL WIN?</p>
-                        <p class="predict-status">Vote now!
-                        <span class="material-symbols-outlined bolt">bolt</span>
-                        </p>
-                        <p class="predict-status hidden">Saving...
-                        <span class="spinner"></span>
-                        </p>
-                        <p class="predict-status hidden">Voted!
-                        <span class="material-symbols-outlined check">check</span>
-                        </p>
-                        <p class="predict-status hidden">Locked
-                        <span class="material-symbols-outlined block">block</span>
-                        </p>
-                        <div class="all-bets"> 
-                            <div class="show-bets-btn"><span class="material-symbols-outlined">ballot</span></div>
-                            <ul class="bets-container hidden">
-                                {% for bet in match_ctx.bets %}
-                                <li>
-                                    <p class="bet-user">{{ bet.user.username }}</p> 
-                                    <div class="bet-teams-container">
-                                        <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt=""> {{ bet.team1_score }}-{{ bet.team2_score }}
-                                        <img class="bets-img"src="{{ match_ctx.match.team_2.logo }}" alt="">
-                                    </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="predict-options">
-                        <div class="predict-options--teams">
-                            <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_1.color }}">{{ match_ctx.match.team_1.name }}</div>
-                            <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_2.color }}">{{ match_ctx.match.team_2.name }}</div>
-                        </div>
-                        <div class="predict-options--score">
-                            <div class="predict-btn predict-score">3-0</div>
-                            <div class="predict-btn predict-score">3-1</div>
-                            <div class="predict-btn predict-score">3-2</div>
-                        </div>
-                    </div>
-                </div>
+{% extends 'base.html' %} {% load static %} {% load custom_filters %} {% load socialaccount %} {% block content %} {%if user.is_authenticated%}
+<div class="aside-container">
+   <aside class="user-standings">
+      <h1 class="header-title">Current standings</h1>
+      <div class="standings-container match-card">
+            {% for user in users_ranked %} 
+            <div class="standings--user">
+            {% if forloop.counter0 == 0 %}
+            <div class="gold-wc box">1</div>
+            {% elif forloop.counter0 == 1 %}
+            <div class="silver-wc box">2</div>
+            {% elif forloop.counter0 == 2 %}
+            <div class="bronze-wc box">3</div>
+            {% else %}
+            <div class="box">{{ forloop.counter }}</div>
+            {% endif %}
+            <p class="pick-name">{{ user.username }}</p>
+            <p class="pick-name standing-pts">{{ user.profile.total_points }}</p>
             </div>
             {% endfor %}
+      </div>
+   </aside>
+   <aside class="upcoming-matches">
+      {% if upcoming_matches%}
+      <h1 class="header-title">Upcoming matches</h1>
+      <div class="predicts-container">
+         {% for match_ctx in upcoming_matches %}
+         <div
+            class="match-card predict"
+            data-predict-id="{{ match_ctx.match.match_id }}"
+            data-match-date="{{ match_ctx.match.match_timedate }}"
+         >
+            <div class="predict-wrapper">
+               <div class="p-info">
+                  <div class="p-team-info">
+                     <img src="{{ match_ctx.match.team_1.logo }}" alt="" />
+                     <p>{{ match_ctx.match.team_1.name }}</p>
+                  </div>
+                  <div class="p-match-info">
+                     <div class="p-date">{{ match_ctx.match.match_timedate|date:"m/d" }}</div>
+                     <div class="p-time">{{ match_ctx.match.match_timedate|time:"h:i A" }}</div>
+                     <div class="p-bo">BO5</div>
+                  </div>
+                  <div class="p-team-info">
+                     <img src="{{ match_ctx.match.team_2.logo }}" alt="" />
+                     <p>{{ match_ctx.match.team_2.name }}</p>
+                  </div>
+               </div>
+               <div class="predict-slogan">
+                  <p class="predict-slogan-text">WHO WILL WIN?</p>
+                  <p class="predict-status">
+                     Vote now!
+                     <span class="material-symbols-outlined bolt">bolt</span>
+                  </p>
+                  <p class="predict-status hidden">
+                     Saving...
+                     <span class="spinner"></span>
+                  </p>
+                  <p class="predict-status hidden">
+                     Voted!
+                     <span class="material-symbols-outlined check">check</span>
+                  </p>
+                  <p class="predict-status hidden">
+                     Locked
+                     <span class="material-symbols-outlined block">block</span>
+                  </p>
+                  <div class="all-bets">
+                     <div class="show-bets-btn"><span class="material-symbols-outlined">ballot</span></div>
+                     <ul class="bets-container hidden">
+                        {% for bet in match_ctx.bets %}
+                        <li>
+                           <p class="bet-user">{{ bet.user.username }}</p>
+                           <div class="bet-teams-container">
+                              <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt="" /> {{ bet.team1_score
+                              }}-{{ bet.team2_score }}
+                              <img class="bets-img" src="{{ match_ctx.match.team_2.logo }}" alt="" />
+                           </div>
+                        </li>
+                        {% endfor %}
+                     </ul>
+                  </div>
+               </div>
+               <div class="predict-options">
+                  <div class="predict-options--teams">
+                     <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_1.color }}">
+                        {{ match_ctx.match.team_1.name }}
+                     </div>
+                     <div class="predict-btn predict-team" data-team-color="{{ match_ctx.match.team_2.color }}">
+                        {{ match_ctx.match.team_2.name }}
+                     </div>
+                  </div>
+                  <div class="predict-options--score">
+                     <div class="predict-btn predict-score">3-0</div>
+                     <div class="predict-btn predict-score">3-1</div>
+                     <div class="predict-btn predict-score">3-2</div>
+                  </div>
+               </div>
             </div>
-            {% endif %}
-</aside>
+         </div>
+         {% endfor %}
+      </div>
+      {% endif %}
+   </aside>
+</div>
+
 <div class="finished-matches">
    <h1 class="header-title">Finished matches</h1>
    {% for match_ctx in finished_matches %}
@@ -85,37 +120,39 @@
                <img class="team-logo" src="{{ match_ctx.match.team_1.logo }}" alt="" />
             </div>
             <div class="score">
-               <span>{{ match_ctx.match.team1_score }}</span><span>-</span><span>{{ match_ctx.match.team2_score }}</span>
+               <span>{{ match_ctx.match.team1_score }}</span><span>-</span
+               ><span>{{ match_ctx.match.team2_score }}</span>
             </div>
             <div class="team-header">
                <img class="team-logo" src="{{ match_ctx.match.team_2.logo }}" alt="" />
                <p>{{ match_ctx.match.team_2.name }}</p>
             </div>
          </div>
-            <div class="all-bets bets"> 
-               <p class="game-type">BO5</p>
-               <div class="show-bets-btn finished"><span class="material-symbols-outlined">ballot</span></div>
-               <ul class="bets-container hidden finished">
-                  {% for bet in match_ctx.bets %}
-                  <li>
-                     <p class="bet-user">{{ bet.user.username }}</p> 
-                     <div class="bet-teams-container">
-                           <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt=""> {{ bet.team1_score }}-{{ bet.team2_score }}
-                           <img class="bets-img"src="{{ match_ctx.match.team_2.logo }}" alt="">
-                     </div>
-                     <div class="bet-pts">
-                        {% if bet.bet_points == 2 %}
-                        <p class="plus-two">+ {{ bet.bet_points }}</p>
-                        {% elif bet.bet_points == 3 %}
-                        <p class="plus-three">+ {{ bet.bet_points }}</p>
-                        {% else %}
-                        <p class="plus-zero">+ {{ bet.bet_points }}</p>
-                        {% endif %}
-                     </div>
-                  </li>
-                  {% endfor %}
-               </ul>
-            </div>
+         <div class="all-bets bets">
+            <p class="game-type">BO5</p>
+            <div class="show-bets-btn finished"><span class="material-symbols-outlined">ballot</span></div>
+            <ul class="bets-container hidden finished">
+               {% for bet in match_ctx.bets %}
+               <li>
+                  <p class="bet-user">{{ bet.user.username }}</p>
+                  <div class="bet-teams-container">
+                     <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt="" /> {{ bet.team1_score }}-{{
+                     bet.team2_score }}
+                     <img class="bets-img" src="{{ match_ctx.match.team_2.logo }}" alt="" />
+                  </div>
+                  <div class="bet-pts">
+                     {% if bet.bet_points == 2 %}
+                     <p class="plus-two">+ {{ bet.bet_points }}</p>
+                     {% elif bet.bet_points == 3 %}
+                     <p class="plus-three">+ {{ bet.bet_points }}</p>
+                     {% else %}
+                     <p class="plus-zero">+ {{ bet.bet_points }}</p>
+                     {% endif %}
+                  </div>
+               </li>
+               {% endfor %}
+            </ul>
+         </div>
       </div>
       <div class="expand-btn-wrapper">
          <span class="material-symbols-outlined expand-btn" data-expand-id="{{ match_ctx.match.match_id  }}"
@@ -352,43 +389,9 @@
    </div>
    {% empty %}
    <p>No finished matches yet.</p>
-   {% endfor %} 
+   {% endfor %}
 </div>
 
-
-<!-- <div class="sidebar">
-      <h1>Standings</h1>
-      <div class="table-wrap">
-         <table class="standings-table">
-            <thead>
-               <tr>
-                  <th></th>
-                  <th>Winners</th>
-                  <th>Results</th>
-                  <th>Points</th>
-               </tr>
-            </thead>
-            <tbody>
-               {% for player in users %}
-               <tr>
-                  <td>
-                     <div class="user-holder">
-                        <a href="{% url 'profile-details' player.id %}">
-                           <img class="user-avatar small" src="{{ player.profile.profile_picture }}" alt="" />{{
-                           player.profile.show_username }}
-                        </a>
-                     </div>
-                  </td>
-                  <td>{{ player.profile.correct_wins }}</td>
-                  <td>{{ player.profile.correct_results }}</td>
-                  <td>{{ player.profile.total_points }}</td>
-               </tr>
-               {% endfor %}
-            </tbody>
-         </table>
-      </div>
-   </div> -->
-<!-- </div> -->
 {% else %}
 <a href="{% provider_login_url 'google' %}?next=/">
    <div class="google-login-button">
