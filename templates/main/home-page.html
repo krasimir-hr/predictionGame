@@ -2,7 +2,7 @@
 <div class="aside-container">
    <aside class="user-standings">
       <h1 class="header-title">Current standings</h1>
-      <div class="standings-container match-card">
+      <div class="standings-container">
             {% for user in users_ranked %} 
             <div class="standings--user">
             {% if forloop.counter0 == 0 %}
@@ -71,8 +71,8 @@
                         <li>
                            <p class="bet-user">{{ bet.user.username }}</p>
                            <div class="bet-teams-container">
-                              <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt="" /> {{ bet.team1_score
-                              }}-{{ bet.team2_score }}
+                              <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt="" /> 
+                              {{ bet.team1_score }}-{{ bet.team2_score }}
                               <img class="bets-img" src="{{ match_ctx.match.team_2.logo }}" alt="" />
                            </div>
                         </li>
@@ -136,8 +136,8 @@
                <li>
                   <p class="bet-user">{{ bet.user.username }}</p>
                   <div class="bet-teams-container">
-                     <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt="" /> {{ bet.team1_score }}-{{
-                     bet.team2_score }}
+                     <img class="bets-img" src="{{ match_ctx.match.team_1.logo }}" alt="" /> 
+                     {{ bet.team1_score }}-{{ bet.team2_score }}
                      <img class="bets-img" src="{{ match_ctx.match.team_2.logo }}" alt="" />
                   </div>
                   <div class="bet-pts">
