@@ -197,6 +197,7 @@
                            src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png"
                            alt=""
                            class="image-icon dragon game-icon"
+                           loading="lazy"
                         />
                         {{ game_data.team_1_stats.dragons }}
                      </span>
@@ -205,6 +206,7 @@
                            src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png"
                            alt=""
                            class="image-icon baron game-icon"
+                           loading="lazy"
                         />
                         {{ game_data.team_1_stats.barons }}
                      </span>
@@ -213,6 +215,7 @@
                            src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png"
                            alt=""
                            class="image-icon inhib game-icon"
+                           loading="lazy"
                         />
                         {{ game_data.team_1_stats.inhibitors }}
                      </span>
@@ -221,6 +224,7 @@
                            src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png"
                            alt=""
                            class="image-icon tower game-icon"
+                           loading="lazy"
                         />
                         {{ game_data.team_1_stats.towers }}
                      </span>
@@ -240,6 +244,7 @@
                         <img
                            src="https://liquipedia.net/commons/images/thumb/f/f4/Lol_stat_icon_cs.png/20px-Lol_stat_icon_cs.png"
                            alt=""
+                           loading="lazy"
                         />
                      </span>
                   </div>
@@ -253,6 +258,7 @@
                            src="https://liquipedia.net/commons/images/2/28/Lol_stat_icon_tower.png"
                            alt=""
                            class="image-icon dragon game-icon"
+                           loading="lazy"
                         />
                         {{ game_data.team_2_stats.towers }}
                      </span>
@@ -261,6 +267,7 @@
                            src="https://liquipedia.net/commons/images/7/74/Lol_stat_icon_inhibitor.png"
                            alt=""
                            class="image-icon baron game-icon"
+                           loading="lazy"
                         />
                         {{ game_data.team_2_stats.inhibitors }}
                      </span>
@@ -269,6 +276,7 @@
                            src="https://liquipedia.net/commons/images/4/45/Lol_stat_icon_baron.png"
                            alt=""
                            class="image-icon inhib game-icon"
+                           loading="lazy"
                         />
                         {{ game_data.team_2_stats.barons }}
                      </span>
@@ -277,6 +285,7 @@
                            src="https://liquipedia.net/commons/images/8/87/Lol_stat_icon_dragon.png"
                            alt=""
                            class="image-icon tower game-icon"
+                           loading="lazy"
                         />
                         {{ game_data.team_2_stats.dragons }}
                      </span>
@@ -288,17 +297,17 @@
                      <div class="player-stats">
                         <div class="items">
                            {% for item in player.item_icons %}
-                           <img class="loadout-icon" src="{{ item.icon }}" alt="" />
+                           <img class="loadout-icon" src="{{ item.icon }}" alt="" loading="lazy"/>
                            {% endfor %}
                         </div>
                         <div class="spells">
                            {% for spell in player.spell_icons %}
-                           <img class="loadout-icon" src="{{ spell.icon }}" alt="" />
+                           <img class="loadout-icon" src="{{ spell.icon }}" alt="" loading="lazy" />
                            {% endfor %}
                         </div>
                         <div class="runes">
                            {% for rune in player.rune_icons %}
-                           <img class="rune-icon" src="{{ rune.icon }}" alt="" />
+                           <img class="rune-icon" src="{{ rune.icon }}" alt="" loading="lazy"/>
                            {% endfor %}
                         </div>
                         <div class="kda-wrapper">
@@ -312,10 +321,10 @@
                            <div class="kda-ratio">{{ player.kda_ratio }} <span>KDA</span></div>
                         </div>
                         <div class="role-icon-wrapper">
-                           <img src="{{ player.role_icon }}" alt="" class="role" />
+                           <img src="{{ player.role_icon }}" alt="" class="role" loading="lazy"/>
                         </div>
                         <div class="champ-icon-wrapper">
-                           <img src="{{ player.champion_icon.icon }}" alt="" class="champion" />
+                           <img src="{{ player.champion_icon.icon }}" alt="" class="champion" loading="lazy"/>
                         </div>
                         <div class="player-wrapper team1">
                            <div class="player--name">{{ match_ctx.match.team_1.name }} {{ player.name }}</div>
@@ -348,10 +357,10 @@
                            <div class="stat-bar cs-stat">{{ player.cs }}</div>
                         </div>
                         <div class="champ-icon-wrapper">
-                           <img src="{{ player.champion_icon.icon }}" alt="" class="champion" />
+                           <img src="{{ player.champion_icon.icon }}" alt="" class="champion" loading="lazy"/>
                         </div>
                         <div class="role-icon-wrapper">
-                           <img src="{{ player.role_icon }}" alt="" class="role" />
+                           <img src="{{ player.role_icon }}" alt="" class="role" loading="lazy"/>
                         </div>
                         <div class="kda-wrapper">
                            <div class="kda">
@@ -365,17 +374,17 @@
                         </div>
                         <div class="runes">
                            {% for rune in player.rune_icons %}
-                           <img class="rune-icon" src="{{ rune.icon }}" alt="" />
+                           <img class="rune-icon" src="{{ rune.icon }}" alt="" loading="lazy" />
                            {% endfor %}
                         </div>
                         <div class="spells">
                            {% for spell in player.spell_icons %}
-                           <img class="loadout-icon" src="{{ spell.icon }}" alt="" />
+                           <img class="loadout-icon" src="{{ spell.icon }}" alt="" loading="lazy"/>
                            {% endfor %}
                         </div>
                         <div class="items">
                            {% for item in player.item_icons %}
-                           <img class="loadout-icon" src="{{ item.icon }}" alt="" />
+                           <img class="loadout-icon" src="{{ item.icon }}" alt="" loading="lazy"/>
                            {% endfor %}
                         </div>
                      </div>

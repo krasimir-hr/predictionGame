@@ -64,7 +64,7 @@ class TournamentPageScraper:
       Returns:
          list[str]: A list of match URL paths.
       """
-      match_url_elements = soup.select('div.brkts-match-info-popup > div.brkts-popup-body > div.brkts-popup-body-element > center > div > a')
+      match_url_elements = soup.select('div.brkts-match-info-popup > div.brkts-popup-body-element > center > div > a')
       return [match_url['href'] for match_url in match_url_elements]
    
    def fetch_all(self) -> Dict[str, List[str]]:
